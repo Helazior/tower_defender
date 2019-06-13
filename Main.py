@@ -15,3 +15,5 @@ Tower = Build("Tower",50,50,30,20)
 print(len(mobliste))
 Tower.attack(mobliste)
 print(len(mobliste))
+
+#test

@@ -22,6 +22,7 @@ class Build :
                     foe.pv -= self.dmg
                     print("{} deal {} dmg to {}".format(self.name,self.dmg,foe.name))
                     print(i)
+                    #lalalou je fais un test2
                     if foe.isitdead():
                          listfoes.pop(i)
                     break

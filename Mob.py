@@ -10,7 +10,7 @@ class Mob:
 
     def isitdead(self):
         if self.pv <= 0 :
-            print("{} is dead".format("self.name"))
-            del self
+            print("{} is dead".format(self.name))
+            return True
         else:
-            pass
+            return False

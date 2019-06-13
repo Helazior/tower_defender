@@ -14,10 +14,13 @@ class Build :
         if listfoes == []:
             pass
         else:
-            for foe in listfoes :
-                    distance = sqrt(((self.posx - foe.posx)**2)+((self.posy - foe.posy)**2))
-                    if  distance <= self.range :
-                        foe.pv -= self.dmg
-                        print("{} deal {} dmg to {}".format(self.name,self.dmg,foe.name))
-                        foe.isitdead()
-                        break
+            for i in range(len(listfoes)) :
+                foe = listfoes[i]
+                distance = sqrt(((self.posx - foe.posx)**2)+((self.posy - foe.posy)**2))
+                if  distance <= self.range :
+                    foe.pv -= self.dmg
+                    print("{} deal {} dmg to {}".format(self.name,self.dmg,foe.name))
+                    print(i)
+                    if foe.isitdead():
+                         listfoes.pop(i)
+                    break

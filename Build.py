@@ -1,5 +1,5 @@
 from math import sqrt
-
+#test
 class Build :
 
     def  __init__(self,name,posx,posy,brange,damage):

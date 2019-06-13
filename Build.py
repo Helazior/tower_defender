@@ -1,7 +1,7 @@
 from math import sqrt
 #test
 class Build :
-
+#test2
     def  __init__(self,name,posx,posy,brange,damage):
         self.name = name
         self.posx = posx

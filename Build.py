@@ -24,5 +24,3 @@ class Build :
                     if foe.isitdead():
                          listfoes.pop(i)
                     break
-
-print("test")

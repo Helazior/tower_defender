@@ -1,6 +1,6 @@
 from random import randint
-from MOB import Mob
-from BUILD import Build
+from Mob import Mob
+from Build import Build
 
 mobliste = []
 

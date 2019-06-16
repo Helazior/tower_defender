@@ -1,6 +1,6 @@
 from random import randint
-from Mob import Mob
-from Build import Build
+from MOB import Mob
+from BUILD import Build
 
 mobliste = []
 
@@ -16,4 +16,4 @@ print(len(mobliste))
 Tower.attack(mobliste)
 print(len(mobliste))
 
-#test
+#trop bien

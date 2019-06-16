@@ -26,3 +26,5 @@ class Build :
                     if foe.isitdead():
                          listfoes.pop(i)
                     break
+
+#coucou

@@ -1,8 +1,8 @@
 from random import randint
-from Mob import *
-from Build import *
 
-from Plateau import * #sous-programme comprennant toutes les fonctions concernant la map
+from Mob import Mob
+from Build import Build
+from Plateau import * #sous-programme comprennant toutes les fonctions et la classe concernant la map
 
 import pygame
 from pygame.locals import *
@@ -40,6 +40,3 @@ while quitter == 0: #tout ce passe là dedans
 
     pygame.display.flip() #rafraichit l'image !
 pygame.quit()
-
-
-

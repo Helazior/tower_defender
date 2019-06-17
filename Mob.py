@@ -41,6 +41,10 @@ class Mob:
                 directiondispo = {i:direction[i]} 
                 print("fini")
                 break
+            elif matrice[self.posymatrice + y][self.posxmatrice + x] == 4:
+                #force le mob a aller dans la bonne direction
+                directiondispo = {i:direction[i]} 
+                break
             elif matrice[self.posymatrice + y][self.posxmatrice + x] == 1:
                 #crée un dictionnaire contenant toute les directions possibles
                 directiondispo[i] = direction[i]

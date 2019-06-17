@@ -10,9 +10,9 @@ from Plateau import * #sous-programme comprennant toutes les fonctions et la cla
 
 pygame.init()
 
-pathname = os.path.dirname(sys.argv[0]) #chemin du programme
+pathname = os.path.dirname(sys.argv[0])     #chemin du programme
 
-os.chdir (os.path.abspath(pathname))    #c'est pour que le repertoire courant soit au niveau du programme
+os.chdir (os.path.abspath(pathname))        #c'est pour que le repertoire courant soit au niveau du programme
 os.chdir ("ressources")                     #c'est pour que le repertoire courant soit dans "ressources"
 
 clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
@@ -46,13 +46,17 @@ while quitter: #tout ce passe là dedans
             posMatrice = convertPixelMatrice(pos)
             print (posMatrice)
             if posMatrice[0] < 39 and posMatrice[1] < 19: #car taille = 2, changer sinon
-                conditionSolVide = 1
-                for i in range(2):
-                    for j in range(2):
-                        conditionSolVide *= (plateau.Matrice[posMatrice[1] + j][posMatrice[0] + i] == 0)
-                if conditionSolVide:
-                    tour.append(Build(pygame, plateau, pos))
-            
+                for k in range(2):
+                    for l in range(2):
+                        conditionSolVide = 1
+                        for i in range(2):
+                            for j in range(2):
+                                conditionSolVide *= (plateau.Matrice[posMatrice[1] + j - l][posMatrice[0] + i - k] == 0)
+                        if conditionSolVide:
+                            tour.append(Build(pygame, plateau, (pos[0] - 30*k, pos[1] - 30*l)))
+                            break
+                    if conditionSolVide:
+                        break
     
     #____________________bouger le mob____________________
     
@@ -72,7 +76,7 @@ while quitter: #tout ce passe là dedans
         listeMob.append(Mob(pygame, plateau))
         lastMobAt = time()
     
-    clock.tick(20) #en fps, valeur+grande = jeu + rapide
+    clock.tick(30) #en fps, valeur+grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 
 pygame.quit()

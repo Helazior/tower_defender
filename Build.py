@@ -1,3 +1,10 @@
+"""
+mettre une varable temps à chaque tour, et la tirer toute les 0.5s
+faire une fonction qui test le temps.
+faire tirer mes tours !
+"""
+
+
 from math import sqrt
 from Mob import Mob
 
@@ -5,7 +12,7 @@ def convertPixelMatrice(pos):
     return (int(pos[0]/30), int(pos[1]/30))
 
 class Build :
-    def  __init__(self, pygame, plateau, pos, brange = 100, damage = 10, taille = 2):
+    def  __init__(self, pygame, plateau, pos, brange = 100, damage = 50, taille = 2):
 
         #charge la tour
         tour = pygame.image.load("tour.png").convert_alpha()
@@ -43,4 +50,5 @@ class Build :
                     
                     if mob.pv <= 0:
                          listMob.pop(i)
+                         print(mort)
                     break

@@ -70,7 +70,7 @@ while quitter: #tout ce passe là dedans
     
     temp = 0
     while temp < len(listeDyingMob):
-        newStateMob = listeDyingMob[temp].move_to_next_pos(pygame, plateau)
+        newStateMob = listeDyingMob[temp].dying(temp)
         if newStateMob == "mob is dead":
             #si le mob est mort on le supprime de la liste
             listeDyingMob.pop(temp)

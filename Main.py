@@ -28,6 +28,8 @@ listeMob.append(Mob(pygame, plateau.Matrice))
 
 quitter = True
 
+tour = []
+
 #_________________________________________________boucle principale:_________________________________________________
 
 while quitter: #tout ce passe là dedans
@@ -37,6 +39,13 @@ while quitter: #tout ce passe là dedans
             
         if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte 
             quitter = False
+            
+        #_________________poser une tour___________________
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            pos = event.pos
+            posMatrice = convertPixMatrice(pos)
+            if posMatrice[0] <= 40 and posMatrice[1] <= 20: #rajouter les conditions chemins et tours
+                tour.append(Build(pygame, Plateau))
             
     #____________________creer le mob____________________
     #le mob est crée toutes le x secondes a preciser sur le if

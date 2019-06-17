@@ -3,7 +3,7 @@ direction = [(-1,0),(0,1),(1,0),(0,-1)] #haut,droite,bas,gauche
 
 class Mob:
 
-    def __init__(self, pygame, plateau, speed = 0.5, pv = 100, wasat = 3):
+    def __init__(self, pygame, plateau, speed = 2, pv = 100, wasat = 3):
         #on set la position initiale du mob
         for posy in range(len(plateau.Matrice)):
             for posx in range(len(plateau.Matrice[posy])):
@@ -17,7 +17,7 @@ class Mob:
                 #sort de la boucle s'il a trouvé
                 break 
         #on set toutes les variables
-        self.speed = 30 * speed
+        self.speed = 30 * ((1/2)**speed)
         self.pv = pv
         posxmax = len(plateau.Matrice[0]) #ou Plateau.nbCasesX
         posymax = len(plateau.Matrice)

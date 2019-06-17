@@ -42,7 +42,7 @@ class Mob:
             self.posymatrice += y
             self.posx = self.posxmatrice * 30 - 15
             self.posy = self.posymatrice * 30 - 15
-            wasat = list(directiondispo.keys())[randomdirection]     
+            wasat = ( list(directiondispo.keys())[randomdirection] + 2 ) % 4
         except ValueError:
             print(f"{self.name} is stuck at ({self.posxmatrice},{self.posymatrice})")
                 

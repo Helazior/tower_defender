@@ -41,6 +41,7 @@ while quitter: #tout ce passe là dedans
             quitter = False
     #____________________bouger le mob____________________
     try:
+        plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs
         mob1.move_to_next_pos(plateau.Matrice , pygame , plateau)
         print(f"{mob1.posxmatrice},{mob1.posymatrice}")
     except IndexError:

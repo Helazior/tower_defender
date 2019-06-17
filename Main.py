@@ -4,7 +4,7 @@ import pygame
 from pygame.locals import *
 import sys, os
 
-from Mob import Mob
+from Mob import *
 from Build import *
 from Plateau import * #sous-programme comprennant toutes les fonctions et la classe concernant la map
 
@@ -24,7 +24,7 @@ plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCase
 #setup pour la creation de mob
 listeMob = list()
 lastMobAt = time()
-listeMob.append(Mob(pygame, plateau))
+listeMob.append(Scootaloo(pygame, plateau))
 
 quitter = True
 
@@ -69,7 +69,7 @@ while quitter: #tout ce passe là dedans
         #____________________creer le mob____________________
     #le mob est crée toutes le x secondes a preciser sur le if
     if time() - lastMobAt > 1 :
-        listeMob.append(Mob(pygame, plateau))
+        listeMob.append(Scootaloo(pygame, plateau))
         lastMobAt = time()
     
     clock.tick(20) #en fps, valeur+grande = jeu + rapide

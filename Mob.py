@@ -22,11 +22,6 @@ class Mob:
         posxmax = len(plateau.Matrice[0]) #ou Plateau.nbCasesX
         posymax = len(plateau.Matrice)
         self.wasat = wasat        #le mob considere de base qu'il viens de la gauche
-        #on attribue au mob une image
-        mobImage = pygame.image.load("mob.png").convert_alpha()
-        self.image = mobImage
-        plateau.fenetre.blit(self.image, (self.posx, self.posy)) #on affiche le mob
-
         
     def move_to_next_pos(self, pygame, plateau):
         directiondispo = dict()
@@ -76,3 +71,32 @@ class Mob:
             #si il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
             return "mob is stuck"
                 
+class Scootaloo(Mob):
+
+    def __init__(self, pygame, plateau, speed = 2, pv = 75, wasat = 3):
+        Mob.__init__(self, pygame, plateau)
+
+        self.type = "flying"
+        
+        #on attribue au mob une image
+        mobImage = pygame.image.load("mob.png").convert_alpha()
+        self.image = mobImage
+        plateau.fenetre.blit(self.image, (self.posx, self.posy)) #on affiche le mob
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

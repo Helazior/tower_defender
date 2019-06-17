@@ -57,19 +57,18 @@ while quitter: #tout ce passe là dedans
     #____________________bouger le mob____________________
     
     plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs
-    try:
-        for i in range(len(listeMob)) :
-            newPosMob = listeMob[i].move_to_next_pos(pygame, plateau)
-            if newPosMob == "mob is stuck":
-                #si le mob est bloqué on le supprime pour l'instant
-                listeMob.pop(i)
-    except IndexError:
-        #la liste est vide
-        pass
+    temp = 0
+    while temp < len(listeMob):
+        newPosMob = listeMob[temp].move_to_next_pos(pygame, plateau)
+        if newPosMob == "mob is stuck":
+            #si le mob est bloqué on le supprime pour l'instant
+            listeMob.pop(temp)
+            temp -= 1
+        temp += 1
 
         #____________________creer le mob____________________
     #le mob est crée toutes le x secondes a preciser sur le if
-    if time() - lastMobAt > 0.5 :
+    if time() - lastMobAt > 1 :
         listeMob.append(Mob(pygame, plateau))
         lastMobAt = time()
     

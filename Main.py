@@ -1,6 +1,3 @@
-
-
-
 from random import randint
 
 from Mob import Mob
@@ -26,12 +23,7 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 Plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
 
 
-#test Calibion
-nbCasesX = 40
-nbCasesY = 20
-tailleFenetre = (nbCasesX*30 + 80,nbCasesY*30 + 80)
-matrice = creationMatrice(tailleFenetre, nbCasesX, nbCasesY)
-mob1 = Mob(pygame, matrice)
+mob1 = Mob(pygame, Plateau.Matrice)
 #print(f"{mob1.posxmatrice},{mob1.posymatrice}")
 
 

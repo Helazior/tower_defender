@@ -5,7 +5,7 @@ from pygame.locals import *
 import sys, os
 
 from Mob import Mob
-from Build import Build
+from Build import *
 from Plateau import * #sous-programme comprennant toutes les fonctions et la classe concernant la map
 
 pygame.init()
@@ -43,9 +43,15 @@ while quitter: #tout ce passe là dedans
         #_________________poser une tour___________________
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = event.pos
-            posMatrice = convertPixMatrice(pos)
-            if posMatrice[0] <= 40 and posMatrice[1] <= 20: #rajouter les conditions chemins et tours
-                tour.append(Build(pygame, Plateau))
+            posMatrice = convertPixelMatrice(pos)
+            print (posMatrice)
+            if posMatrice[0] < 39 and posMatrice[1] < 19: #car taille = 2, changer sinon
+                conditionSolVide = 1
+                for i in range(2):
+                    for j in range(2):
+                        conditionSolVide *= (plateau.Matrice[posMatrice[1] + j][posMatrice[0] + i] == 0)
+                if conditionSolVide:
+                    tour.append(Build(pygame, plateau, pos))
             
     
     #____________________bouger le mob____________________

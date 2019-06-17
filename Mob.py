@@ -92,7 +92,7 @@ class Scootaloo(Mob):
     def __init__(self, pygame, plateau):
         Mob.__init__(self, pygame, plateau, speed = 3, pv = 25)
 
-        self.type = "air"
+        self.type = "earth"
         
         #on attribue au mob une image et on l'affiche
         self.aliveSkin = pygame.image.load("scootalooAlive.png").convert_alpha()

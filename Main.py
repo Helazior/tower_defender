@@ -19,16 +19,17 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 
 #__________________________________________________création map:_____________________________________________________
 
-plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
-
+#setup pour le plateau
+plateau = Plateau(pygame)
 #setup pour la creation de mob
 listeMob = list()
 listeDyingMob = list()
 lastMobAt = 0
+#setup pour la creation de tour
+listeTour = list()
 
 quitter = True
 
-listeTour = []
 
 #_________________________________________________boucle principale:_________________________________________________
 
@@ -42,9 +43,10 @@ while quitter: #tout ce passe là dedans
             
         #_________________poser une tour___________________
         if event.type == pygame.MOUSEBUTTONDOWN:
+            #recuperation de la position du clique 
             pos = event.pos
             posMatrice = convertPixelMatrice(pos)
-            print (posMatrice)
+            #verification que la tour est placable
             if posMatrice[0] < 39 and posMatrice[1] < 19: #car taille = 2, changer sinon
                 conditionSolVide = True
                 for i in range(2):

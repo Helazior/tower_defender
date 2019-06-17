@@ -9,8 +9,8 @@ class Mob:
                 if matrice[posy][posx] == 2:
                     self.posxmatrice = posx
                     self.posymatrice = posy
-                    self.posx = posx * 30 + 15
-                    self.posy = posy * 30 + 15
+                    self.posx = posx * 30
+                    self.posy = posy * 30
                     break
             if matrice[posy][posx] == 2:
                 break #sort de la boucle s'il a trouvé
@@ -35,8 +35,8 @@ class Mob:
             elif matrice[self.posymatrice + y][self.posxmatrice + x] == 3:
                 self.posxmatrice += x
                 self.posymatrice += y
-                self.posx = self.posxmatrice * 30 + 15
-                self.posy = self.posymatrice * 30 + 15
+                self.posx = self.posxmatrice * 30
+                self.posy = self.posymatrice * 30
                 #self.finnishthematrice
             elif matrice[self.posymatrice + y][self.posxmatrice + x] == 1:
                 directiondispo[i] = direction[i]
@@ -49,8 +49,8 @@ class Mob:
             self.wasat = ( goingto + 2 ) % 4
             self.posxmatrice += x
             self.posymatrice += y
-            self.posx = self.posxmatrice * 30 + 15
-            self.posy = self.posymatrice * 30 + 15
+            self.posx = self.posxmatrice * 30
+            self.posy = self.posymatrice * 30
             wasat = ( list(directiondispo.keys())[randomdirection] + 2 ) % 4
             
             plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs

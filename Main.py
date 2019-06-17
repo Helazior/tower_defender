@@ -1,8 +1,13 @@
+
+
+
 from random import randint
 
 from Mob import Mob
 from Build import Build
 from Plateau import * #sous-programme comprennant toutes les fonctions et la classe concernant la map
+
+from time import time
 
 import pygame
 from pygame.locals import *
@@ -14,28 +19,25 @@ pathname = os.path.dirname(sys.argv[0]) #chemin du programme
 os.chdir (os.path.abspath(pathname))    #c'est pour que le repertoire courant soit au niveau du programme
 os.chdir ("ressources")                     #c'est pour que le repertoire courant soit dans "ressources"
 
+clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
+
+#__________________________________________________création map:_____________________________________________________
+
+Plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
 
 
-#___________________création map:__________________
-Plateau = Plateau() #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
+#test Calibion
+nbCasesX = 40
+nbCasesY = 20
+tailleFenetre = (nbCasesX*30 + 80,nbCasesY*30 + 80)
+matrice = creationMatrice(tailleFenetre, nbCasesX, nbCasesY)
+mob1 = Mob(pygame, matrice)
+#print(f"{mob1.posxmatrice},{mob1.posymatrice}")
 
-#Creation et affichage de la fenetre:
-initFenetre(Plateau,pygame)
 
 quitter = True
 
-#test Calibion
-nbCasesX = 41
-nbCasesY = 21
-tailleFenetre = (nbCasesX*30 + 50,nbCasesY*30 + 50)
-matrice = creationMatrice(tailleFenetre, nbCasesX, nbCasesY)
-test = Mob(matrice)
-print(f"{test.posxmatrice},{test.posymatrice}")
-test.move_to_next_pos()
-print(f"{test.posxmatrice},{test.posymatrice}")
-
-
-#__________________boucle principale:________________
+#_________________________________________________boucle principale:_________________________________________________
 
 while quitter: #tout ce passe là dedans
     
@@ -44,7 +46,14 @@ while quitter: #tout ce passe là dedans
             
         if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte :)
             quitter = False
+    #____________________bouger le mob____________________
+    mob1.move_to_next_pos(pygame, Plateau)
+    
+    #print(f"{mob1.posxmatrice},{mob1.posymatrice}")
 
 
+    
+    clock.tick(3) #3 fps, c'est juste pour tester le déplacement du mob
     pygame.display.flip() #rafraichit l'image !
+
 pygame.quit()

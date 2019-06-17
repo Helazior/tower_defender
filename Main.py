@@ -1,17 +1,15 @@
 from random import randint
+from time import time
+import pygame
+from pygame.locals import *
+import sys, os
 
 from Mob import Mob
 from Build import Build
 from Plateau import * #sous-programme comprennant toutes les fonctions et la classe concernant la map
 
-from time import time
-
-import pygame
-from pygame.locals import *
-
 pygame.init()
 
-import sys, os
 pathname = os.path.dirname(sys.argv[0]) #chemin du programme
 
 os.chdir (os.path.abspath(pathname))    #c'est pour que le repertoire courant soit au niveau du programme

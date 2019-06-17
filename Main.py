@@ -24,7 +24,6 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
 
 
-
 mob1 = Mob(plateau.Matrice , pygame)
 #print(f"{mob1.posxmatrice},{mob1.posymatrice}")
 
@@ -41,13 +40,12 @@ while quitter: #tout ce passe là dedans
         if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte :)
             quitter = False
     #____________________bouger le mob____________________
+    try:
+        mob1.move_to_next_pos(plateau.Matrice , pygame , plateau)
+        print(f"{mob1.posxmatrice},{mob1.posymatrice}")
+    except IndexError:
+        print(f"{mob1.name} is stuck on a border")
 
-    mob1.move_to_next_pos(plateau.Matrice , pygame , plateau)
-    
-    #print(f"{mob1.posxmatrice},{mob1.posymatrice}")
-
-
-    
     clock.tick(30) #3 fps, c'est juste pour tester le déplacement du mob
     pygame.display.flip() #rafraichit l'image !
 

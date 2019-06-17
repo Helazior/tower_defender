@@ -37,9 +37,12 @@ class Mob:
                 self.posymatrice += y
                 self.posx = self.posxmatrice * 30
                 self.posy = self.posymatrice * 30
+
+                plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs
+                plateau.fenetre.blit(self.image, (self.posx, self.posy)) #on affiche le mob
                 print("fini")
                 return "fini"
-                #self.finnishthematrice
+                #self.finnishthematrice a rajouter ici
             elif matrice[self.posymatrice + y][self.posxmatrice + x] == 1:
                 directiondispo[i] = direction[i]
             else:
@@ -53,7 +56,6 @@ class Mob:
             self.posymatrice += y
             self.posx = self.posxmatrice * 30
             self.posy = self.posymatrice * 30
-            wasat = ( list(directiondispo.keys())[randomdirection] + 2 ) % 4
             
             plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs
             plateau.fenetre.blit(self.image, (self.posx, self.posy)) #on affiche le mob

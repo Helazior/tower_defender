@@ -3,7 +3,7 @@ direction = [(-1,0),(0,1),(1,0),(0,-1)] #haut,droite,bas,gauche
 
 class Mob:
 
-    def __init__(self, pygame, plateau, speed = 2, pv = 100, wasat = 3):
+    def __init__(self, pygame, plateau, speed = 1, pv = 100, wasat = 3, dying = 3):
         #on set la position initiale du mob
         for posy in range(len(plateau.Matrice)):
             for posx in range(len(plateau.Matrice[posy])):
@@ -22,11 +22,7 @@ class Mob:
         posxmax = len(plateau.Matrice[0]) #ou Plateau.nbCasesX
         posymax = len(plateau.Matrice)
         self.wasat = wasat        #le mob considere de base qu'il viens de la gauche
-        #on attribue au mob une image
-        mobImage = pygame.image.load("mob.png").convert_alpha()
-        self.image = mobImage
-        plateau.fenetre.blit(self.image, (self.posx, self.posy)) #on affiche le mob
-
+        self.dying = dying
         
     def move_to_next_pos(self, pygame, plateau):
         directiondispo = dict()
@@ -75,4 +71,55 @@ class Mob:
         except ValueError:
             #si il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
             return "mob is stuck"
-                
+        
+    def is_it_dying(self,i):
+        if self.pv <= 0:
+            listeMob.pop(i)
+            listeDyingMob.append(self)
+            
+
+    def dying(self,i):
+        if dying == 3:
+            #image de mob mort 1
+            pass
+        elif dying == 2:
+            #image de mob mort 2
+            pass
+        elif dying == 1:
+            #image de mob mort 3
+            pass
+        else:
+            return "mob is dead"
+        dying -= 1
+            
+
+
+class Scootaloo(Mob):
+
+    def __init__(self, pygame, plateau, speed = 2, pv = 75, wasat = 3):
+        Mob.__init__(self, pygame, plateau)
+
+        self.type = "flying"
+        
+        #on attribue au mob une image
+        mobImage = pygame.image.load("mob.png").convert_alpha()
+        self.image = mobImage
+        plateau.fenetre.blit(self.image, (self.posx, self.posy)) #on affiche le mob
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

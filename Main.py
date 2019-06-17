@@ -44,8 +44,7 @@ while quitter: #tout ce passe là dedans
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = event.pos
             posMatrice = convertPixelMatrice(pos)
-            print (posMatrice)
-            if posMatrice[0] < 39 and posMatrice[1] < 19: #car taille = 2, changer sinon
+            if posMatrice[0] < 39 and posMatrice[1] < 19:
                 for k in range(2):
                     for l in range(2):
                         conditionSolVide = 1

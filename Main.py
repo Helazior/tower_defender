@@ -1,19 +1,19 @@
 from random import randint
-from time import time
-import pygame
 from pygame.locals import *
+from time import time
 import sys, os
+import pygame
 
-from Mob import *
-from Build import *
-from Plateau import * #sous-programme comprennant toutes les fonctions et la classe concernant la map
+from Mob import *       #sous-programme comprennant les classes de Mob
+from Build import *     #sous-programme comprennant les classes de Build
+from Plateau import *   #sous-programme comprennant toutes les fonctions et la classe concernant la map
 
 pygame.init()
 
 pathname = os.path.dirname(sys.argv[0]) #chemin du programme
 
 os.chdir (os.path.abspath(pathname))    #c'est pour que le repertoire courant soit au niveau du programme
-os.chdir ("ressources")                     #c'est pour que le repertoire courant soit dans "ressources"
+os.chdir ("ressources")                 #c'est pour que le repertoire courant soit dans "ressources"
 
 clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 
@@ -28,7 +28,7 @@ lastMobAt = 0
 
 quitter = True
 
-tour = []
+listeTour = []
 
 #_________________________________________________boucle principale:_________________________________________________
 
@@ -46,12 +46,12 @@ while quitter: #tout ce passe là dedans
             posMatrice = convertPixelMatrice(pos)
             print (posMatrice)
             if posMatrice[0] < 39 and posMatrice[1] < 19: #car taille = 2, changer sinon
-                conditionSolVide = 1
+                conditionSolVide = True
                 for i in range(2):
                     for j in range(2):
                         conditionSolVide *= (plateau.Matrice[posMatrice[1] + j][posMatrice[0] + i] == 0)
                 if conditionSolVide:
-                    tour.append(Build(pygame, plateau, pos))
+                    listeTour.append(Build(pygame, plateau, pos))
             
     
     #____________________bouger le mob____________________

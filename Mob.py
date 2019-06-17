@@ -17,7 +17,7 @@ class Mob:
                 #sort de la boucle s'il a trouvé
                 break 
         #on set toutes les variables
-        self.speed = 30 * ((1/2)**speed)
+        self.speed = 30 * (1/speed)
         self.pv = pv
         posxmax = len(plateau.Matrice[0]) #ou Plateau.nbCasesX
         posymax = len(plateau.Matrice)
@@ -89,17 +89,41 @@ class Mob:
 
 class Scootaloo(Mob):
 
-    def __init__(self, pygame, plateau, speed = 2, pv = 75, wasat = 3):
-        Mob.__init__(self, pygame, plateau)
+    def __init__(self, pygame, plateau):
+        Mob.__init__(self, pygame, plateau, speed = 3, pv = 25)
 
-        self.type = "flying"
+        self.type = "air"
         
-        #on attribue au mob une image
+        #on attribue au mob une image et on l'affiche
         self.aliveSkin = pygame.image.load("scootalooAlive.png").convert_alpha()
         self.dyingSkin = pygame.image.load("scootalooDying.png").convert_alpha()
-        plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) #on affiche le mob
+        plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) 
+        
+
+class AppleBloom(Mob):
+
+    def __init__(self, pygame, plateau):
+        Mob.__init__(self, pygame, plateau, speed = 6, pv = 75)
+
+        self.type = "earth"
+        
+        #on attribue au mob une image et on l'affiche
+        self.aliveSkin = pygame.image.load("applebloomAlive.png").convert_alpha()
+        self.dyingSkin = pygame.image.load("applebloomDying.png").convert_alpha()
+        plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) 
 
         
+class SweetieBelle(Mob):
+    def __init__(self, pygame, plateau):
+        Mob.__init__(self, pygame, plateau, speed = 5, pv = 50)
+
+        self.type = "earth" #magic?
+        
+        #on attribue au mob une image et on l'affiche
+        self.aliveSkin = pygame.image.load("sweetiebelleAlive.png").convert_alpha()
+        self.dyingSkin = pygame.image.load("sweetiebelleDying.png").convert_alpha()
+        plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) 
+
 
 
 

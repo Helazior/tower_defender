@@ -83,8 +83,14 @@ while quitter: #tout ce passe là dedans
 
     #____________________creer le mob____________________
     #le mob est crée toutes le x secondes (a preciser sur le if)
-    if time() - lastMobAt > 1 :
-        listeMob.append(Scootaloo(pygame, plateau))
+    if time() - lastMobAt > 0.5 :
+        randomponey = randint(0,2)
+        if randomponey == 0:
+            listeMob.append(Scootaloo(pygame, plateau))
+        elif randomponey == 1:
+            listeMob.append(AppleBloom(pygame, plateau))
+        else:
+            listeMob.append(SweetieBelle(pygame, plateau))
         lastMobAt = time()
     
     clock.tick(30) #en fps, valeur+grande = jeu + rapide

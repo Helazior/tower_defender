@@ -21,10 +21,10 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 
 plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
 
-
-mob1 = Mob(plateau.Matrice , pygame)
-#print(f"{mob1.posxmatrice},{mob1.posymatrice}")
-
+#setup pour la creation de mob
+listeMob = list()
+lastMobAt = time()
+listeMob.append(Mob(pygame, plateau.Matrice))
 
 quitter = True
 
@@ -35,17 +35,31 @@ while quitter: #tout ce passe là dedans
     for event in pygame.event.get(): #il passe toutes les touches en revu pour voir lorsque tu appuies sur une touche
         pygame.event.pump() #c'est pour pas qu'il fasse "le programme ne répond plus", normalement ça marche sans mais pour moi non
             
-        if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte :)
+        if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte 
             quitter = False
+            
+    #____________________creer le mob____________________
+    #le mob est crée toutes le x secondes a preciser sur le if
+    if time() - lastMobAt > 0.5 :
+        listeMob.append(Mob(pygame, plateau.Matrice))
+        lastMobAt = time()
+    else:
+        pass
+    
     #____________________bouger le mob____________________
+    
+    plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs
     try:
-        plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs
-        mob1.move_to_next_pos(plateau.Matrice , pygame , plateau)
-        print(f"{mob1.posxmatrice},{mob1.posymatrice}")
+        for i in range(len(listeMob)) :
+            newPosMob = listeMob[i].move_to_next_pos(pygame, plateau.Matrice, plateau)
+            if newPosMob == "mob is stuck":
+                #si le mob est bloqué on le supprime pour l'instant
+                listeMob.pop(i)
     except IndexError:
-        print(f"{mob1.name} is stuck on a border")
-
-    clock.tick(30) #3 fps, c'est juste pour tester le déplacement du mob
-    pygame.display.flip() #rafraichit l'image !
+        #la liste est vide
+        pass
+    
+    clock.tick(20) #en fps, valeur+grande = jeu + rapide
+    pygame.display.flip() #rafraichit l'image
 
 pygame.quit()

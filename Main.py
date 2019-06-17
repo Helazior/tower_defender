@@ -1,10 +1,10 @@
 from random import randint
-from time import time
-import pygame
 from pygame.locals import *
+from time import time
 import sys, os
+import pygame
 
-from Mob import Mob
+from Mob import *
 from Build import *
 from Plateau import * #sous-programme comprennant toutes les fonctions et la classe concernant la map
 
@@ -19,16 +19,16 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 
 #__________________________________________________création map:_____________________________________________________
 
-plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
-
+#setup pour le plateau
+plateau = Plateau(pygame)
 #setup pour la creation de mob
 listeMob = list()
-lastMobAt = time()
-listeMob.append(Mob(pygame, plateau))
+listeDyingMob = list()
+lastMobAt = 0
+#setup pour la creation de tour
+listeTour = list()
 
 quitter = True
-
-tour = []
 
 #_________________________________________________boucle principale:_________________________________________________
 
@@ -52,7 +52,7 @@ while quitter: #tout ce passe là dedans
                             for j in range(2):
                                 conditionSolVide *= (plateau.Matrice[posMatrice[1] + j - l][posMatrice[0] + i - k] == 0)
                         if conditionSolVide:
-                            tour.append(Build(pygame, plateau, (pos[0] - 30*k, pos[1] - 30*l)))
+                            listeTour.append(Build(pygame, plateau, (pos[0] - 30*k, pos[1] - 30*l)))
                             break
                     if conditionSolVide:
                         break
@@ -68,11 +68,23 @@ while quitter: #tout ce passe là dedans
             listeMob.pop(temp)
             temp -= 1
         temp += 1
+        
+    #____________________tuer le mob____________________
+    
+    temp = 0
+    while temp < len(listeDyingMob):
+        newStateMob = listeDyingMob[temp].dying(temp)
+        if newStateMob == "mob is dead":
+            #si le mob est mort on le supprime de la liste
+            listeDyingMob.pop(temp)
+            temp -= 1
+        temp += 1
 
-        #____________________creer le mob____________________
-    #le mob est crée toutes le x secondes a preciser sur le if
+
+    #____________________creer le mob____________________
+    #le mob est crée toutes le x secondes (a preciser sur le if)
     if time() - lastMobAt > 1 :
-        listeMob.append(Mob(pygame, plateau))
+        listeMob.append(Scootaloo(pygame, plateau))
         lastMobAt = time()
     
     clock.tick(30) #en fps, valeur+grande = jeu + rapide

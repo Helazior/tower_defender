@@ -20,10 +20,10 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 
 #__________________________________________________création map:_____________________________________________________
 
-Plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
+plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
 
 
-mob1 = Mob(pygame, Plateau.Matrice)
+mob1 = Mob(plateau.Matrice , pygame)
 #print(f"{mob1.posxmatrice},{mob1.posymatrice}")
 
 
@@ -39,13 +39,14 @@ while quitter: #tout ce passe là dedans
         if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte :)
             quitter = False
     #____________________bouger le mob____________________
-    mob1.move_to_next_pos(pygame, Plateau)
+
+    mob1.move_to_next_pos(plateau.Matrice , pygame , plateau)
     
     #print(f"{mob1.posxmatrice},{mob1.posymatrice}")
 
 
     
-    clock.tick(3) #3 fps, c'est juste pour tester le déplacement du mob
+    clock.tick(30) #3 fps, c'est juste pour tester le déplacement du mob
     pygame.display.flip() #rafraichit l'image !
 
 pygame.quit()

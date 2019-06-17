@@ -23,8 +23,8 @@ plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCase
 
 #setup pour la creation de mob
 listeMob = list()
-lastMobAt = time()
-listeMob.append(Scootaloo(pygame, plateau))
+listeDyingMob = list()
+lastMobAt = 0
 
 quitter = True
 
@@ -66,8 +66,19 @@ while quitter: #tout ce passe là dedans
             temp -= 1
         temp += 1
 
-        #____________________creer le mob____________________
-    #le mob est crée toutes le x secondes a preciser sur le if
+    #____________________tuer le mob____________________
+    
+    temp = 0
+    while temp < len(listeDyingMob):
+        newStateMob = listeDyingMob[temp].move_to_next_pos(pygame, plateau)
+        if newStateMob == "mob is dead":
+            #si le mob est mort on le supprime de la liste
+            listeDyingMob.pop(temp)
+            temp -= 1
+        temp += 1
+
+    #____________________creer le mob____________________
+    #le mob est crée toutes le x secondes (a preciser sur le if)
     if time() - lastMobAt > 1 :
         listeMob.append(Scootaloo(pygame, plateau))
         lastMobAt = time()

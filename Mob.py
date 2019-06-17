@@ -37,6 +37,8 @@ class Mob:
                 self.posymatrice += y
                 self.posx = self.posxmatrice * 30
                 self.posy = self.posymatrice * 30
+                print("fini")
+                return "fini"
                 #self.finnishthematrice
             elif matrice[self.posymatrice + y][self.posxmatrice + x] == 1:
                 directiondispo[i] = direction[i]

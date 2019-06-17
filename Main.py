@@ -13,6 +13,7 @@ pygame.init()
 
 import sys, os
 pathname = os.path.dirname(sys.argv[0]) #chemin du programme
+
 os.chdir (os.path.abspath(pathname))    #c'est pour que le repertoire courant soit au niveau du programme
 os.chdir ("ressources")                     #c'est pour que le repertoire courant soit dans "ressources"
 
@@ -21,6 +22,7 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 #__________________________________________________création map:_____________________________________________________
 
 plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCasesY, tailleFenetre)
+
 
 
 mob1 = Mob(plateau.Matrice , pygame)

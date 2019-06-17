@@ -24,7 +24,7 @@ plateau = Plateau(pygame) #initialise l'objet plateau (Matrice, nbCasesX, nbCase
 #setup pour la creation de mob
 listeMob = list()
 lastMobAt = time()
-listeMob.append(Mob(pygame, plateau.Matrice))
+listeMob.append(Mob(pygame, plateau))
 
 quitter = True
 
@@ -47,26 +47,25 @@ while quitter: #tout ce passe là dedans
             if posMatrice[0] <= 40 and posMatrice[1] <= 20: #rajouter les conditions chemins et tours
                 tour.append(Build(pygame, Plateau))
             
-    #____________________creer le mob____________________
-    #le mob est crée toutes le x secondes a preciser sur le if
-    if time() - lastMobAt > 0.5 :
-        listeMob.append(Mob(pygame, plateau.Matrice))
-        lastMobAt = time()
-    else:
-        pass
     
     #____________________bouger le mob____________________
     
     plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs
     try:
         for i in range(len(listeMob)) :
-            newPosMob = listeMob[i].move_to_next_pos(pygame, plateau.Matrice, plateau)
+            newPosMob = listeMob[i].move_to_next_pos(pygame, plateau)
             if newPosMob == "mob is stuck":
                 #si le mob est bloqué on le supprime pour l'instant
                 listeMob.pop(i)
     except IndexError:
         #la liste est vide
         pass
+
+        #____________________creer le mob____________________
+    #le mob est crée toutes le x secondes a preciser sur le if
+    if time() - lastMobAt > 0.5 :
+        listeMob.append(Mob(pygame, plateau))
+        lastMobAt = time()
     
     clock.tick(20) #en fps, valeur+grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image

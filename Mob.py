@@ -3,31 +3,32 @@ direction = [(-1,0),(0,1),(1,0),(0,-1)] #haut,droite,bas,gauche
 
 class Mob:
 
-    def __init__(self, pygame, matrice, speed = 1, pv = 100, wasat = 3):
+    def __init__(self, pygame, plateau, speed = 1, pv = 100, wasat = 3):
         #on set la position initiale du mob
-        for posy in range(len(matrice)):
-            for posx in range(len(matrice[posy])):
-                if matrice[posy][posx] == 2:
+        for posy in range(len(plateau.Matrice)):
+            for posx in range(len(plateau.Matrice[posy])):
+                if plateau.Matrice[posy][posx] == 2:
                     self.posxmatrice = posx
                     self.posymatrice = posy
                     self.posx = posx * 30
                     self.posy = posy * 30
                     break
-            if matrice[posy][posx] == 2:
+            if plateau.Matrice[posy][posx] == 2:
                 #sort de la boucle s'il a trouvé
                 break 
         #on set toutes les variables
         self.speed = speed 
         self.pv = pv
-        posxmax = len(matrice[0]) #ou Plateau.nbCasesX
-        posymax = len(matrice)
+        posxmax = len(plateau.Matrice[0]) #ou Plateau.nbCasesX
+        posymax = len(plateau.Matrice)
         self.wasat = wasat        #le mob considere de base qu'il viens de la gauche
         #on attribue au mob une image
         mobImage = pygame.image.load("mob.png").convert_alpha()
         self.image = mobImage
+        plateau.fenetre.blit(self.image, (self.posx, self.posy)) #on affiche le mob
 
         
-    def move_to_next_pos(self, pygame, matrice, plateau):
+    def move_to_next_pos(self, pygame, plateau):
         directiondispo = dict()
         for i in range(4):
             try:
@@ -36,15 +37,15 @@ class Mob:
                 if i == self.wasat :
                     #le mob ne peut pas reculer
                     pass
-                elif matrice[self.posymatrice + y][self.posxmatrice + x] == 3:
+                elif plateau.Matrice[self.posymatrice + y][self.posxmatrice + x] == 3:
                     #force le mob finir si la case de fin est a coté
                     directiondispo = {i:direction[i]}
                     break
-                elif matrice[self.posymatrice + y][self.posxmatrice + x] == 4:
+                elif plateau.Matrice[self.posymatrice + y][self.posxmatrice + x] == 4:
                     #force le mob a aller dans la bonne direction
                     directiondispo = {i:direction[i]} 
                     break
-                elif matrice[self.posymatrice + y][self.posxmatrice + x] == 1:
+                elif plateau.Matrice[self.posymatrice + y][self.posxmatrice + x] == 1:
                     #crée un dictionnaire contenant toute les directions possibles
                     directiondispo[i] = direction[i]
                 else:

@@ -66,7 +66,7 @@ class Mob:
             self.posxmatrice = int(self.posx / 30)
             self.posymatrice = int(self.posy / 30)
             #enfin on deplace visuellement le mob
-            plateau.fenetre.blit(self.image, (self.posx, self.posy)) #on affiche le mob
+            plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) #on affiche le mob
 
         except ValueError:
             #si il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
@@ -79,15 +79,8 @@ class Mob:
             
 
     def dying(self,i):
-        if dying == 3:
-            #image de mob mort 1
-            pass
-        elif dying == 2:
-            #image de mob mort 2
-            pass
-        elif dying == 1:
-            #image de mob mort 3
-            pass
+        if dying > 3 :
+            plateau.fenetre.blit(self.dyingSkin, (self.posx, self.posy)) #on affiche le mob
         else:
             return "mob is dead"
         dying -= 1
@@ -102,9 +95,11 @@ class Scootaloo(Mob):
         self.type = "flying"
         
         #on attribue au mob une image
-        mobImage = pygame.image.load("mob.png").convert_alpha()
-        self.image = mobImage
-        plateau.fenetre.blit(self.image, (self.posx, self.posy)) #on affiche le mob
+        self.aliveSkin = pygame.image.load("scootalooAlive.png").convert_alpha()
+        self.dyingSkin = pygame.image.load("scootalooDying.png").convert_alpha()
+        plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) #on affiche le mob
+
+        
 
 
 

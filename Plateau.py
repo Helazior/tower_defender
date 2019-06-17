@@ -1,4 +1,4 @@
-def initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice, margeX, margeY): #crée et affiche la fenêtre
+def initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice): #crée et affiche la fenêtre
     pygame.display.set_caption("Tower Defender !")
 
     fenetre = pygame.display.set_mode(tailleFenetre)
@@ -15,11 +15,11 @@ def initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice, margeX, marge
     for i in range(nbCasesX):
         for j in range(nbCasesY):
             if Matrice[j][i] != 0:
-                fenetre.blit(chemin, (30*i + margeX, 30*j + margeY)) #on place un chemin quand c'est pas le fond
+                fenetre.blit(chemin, (30*i, 30*j)) #on place un chemin quand c'est pas le fond
             if Matrice[j][i] == 2:
-                fenetre.blit(start, (30*i + margeX, 30*j + margeY)) #on place le start
+                fenetre.blit(start, (30*i, 30*j)) #on place le start
             elif Matrice[j][i] == 3:
-                fenetre.blit(end, (30*i + margeX, 30*j + margeY))  #on place l'arrivé des mobs
+                fenetre.blit(end, (30*i, 30*j))  #on place l'arrivé des mobs
 
     pygame.display.flip() #rafraichit l'image !
 
@@ -67,8 +67,5 @@ class Plateau: #classe de la map attributs: Matrice, nbCasesX, nbCasesY, tailleF
 
         margeFenetreGauche = 15
         margeFenetreHaut = 15
-
-        self.margeFenetreGauche = margeFenetreGauche
-        self.margeFenetreHaut = margeFenetreHaut
         
-        self.fenetre, self.copy_fond = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice, margeFenetreGauche, margeFenetreHaut)
+        self.fenetre, self.copy_fond = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice)

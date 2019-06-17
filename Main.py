@@ -17,7 +17,7 @@ os.chdir ("ressources")                 #c'est pour que le repertoire courant so
 
 clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 
-#__________________________________________________création map:_____________________________________________________
+#__________________________________________________setup jeu:_____________________________________________________
 
 #setup pour le plateau
 plateau = Plateau(pygame)

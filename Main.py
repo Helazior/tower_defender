@@ -28,17 +28,17 @@ lastMobAt = 0
 #setup pour la creation de tour
 listeTour = list()
 
-quitter = True
+continuer = True
 
 #_________________________________________________boucle principale:_________________________________________________
 
-while quitter: #tout ce passe là dedans
+while continuer: #tout ce passe là dedans
     
     for event in pygame.event.get(): #il passe toutes les touches en revu pour voir lorsque tu appuies sur une touche
         pygame.event.pump() #c'est pour pas qu'il fasse "le programme ne répond plus", normalement ça marche sans mais pour moi non
             
         if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte 
-            quitter = False
+            continuer = False
             
         #_________________poser une tour___________________
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -56,7 +56,7 @@ while quitter: #tout ce passe là dedans
                             break
                     if conditionSolVide:
                         break
-    
+
     #____________________bouger le mob____________________
     
     plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs
@@ -73,13 +73,12 @@ while quitter: #tout ce passe là dedans
     
     temp = 0
     while temp < len(listeDyingMob):
-        newStateMob = listeDyingMob[temp].dying(temp)
-        if newStateMob == "mob is dead":
+        etatMob = listeDyingMob[temp].is_dying(pygame, plateau)
+        if etatMob == "mob is dead":
             #si le mob est mort on le supprime de la liste
             listeDyingMob.pop(temp)
             temp -= 1
         temp += 1
-
 
     #____________________creer le mob____________________
     #le mob est crée toutes le x secondes (a preciser sur le if)
@@ -92,7 +91,8 @@ while quitter: #tout ce passe là dedans
         else:
             listeMob.append(SweetieBelle(pygame, plateau))
         lastMobAt = time()
-    
+
+
     clock.tick(30) #en fps, valeur+grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 

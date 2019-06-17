@@ -72,18 +72,18 @@ class Mob:
             #si il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
             return "mob is stuck"
         
-    def is_it_dying(self,i):
+    def is_it_dying(self, posliste):
         if self.pv <= 0:
-            listeMob.pop(i)
+            listeMob.pop(posliste)
             listeDyingMob.append(self)
             
 
-    def dying(self,i):
-        if dying > 3 :
-            plateau.fenetre.blit(self.dyingSkin, (self.posx, self.posy)) #on affiche le mob
+    def is_dying(self, pygame, plateau):
+        if self.dying > 0 :
+            plateau.fenetre.blit(self.dyingSkin, (self.posx, self.posy))
         else:
             return "mob is dead"
-        dying -= 1
+        self.dying -= 1
             
 
 

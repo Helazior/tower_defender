@@ -57,43 +57,21 @@ while continuer: #tout ce passe là dedans
                     if conditionSolVide:
                         break
 
-    #____________________bouger le mob____________________
-    
-    plateau.fenetre.blit(plateau.copy_fond, (0,0)) #on affiche le fond de base pour effacer les mobs
-    temp = 0
-    while temp < len(listeMob):
-        newPosMob = listeMob[temp].move_to_next_pos(pygame, plateau)
-        if newPosMob == "mob is stuck":
-            #si le mob est bloqué on le supprime pour l'instant
-            listeMob.pop(temp)
-            temp -= 1
-        temp += 1
+    #____________________bouger les mobs____________________
+    #on affiche le fond de base pour effacer les mobs
+    plateau.fenetre.blit(plateau.copy_fond, (0,0))
+    Mob.movemobs(plateau, listeMob)
         
-    #____________________tuer le mob____________________
-    
-    temp = 0
-    while temp < len(listeDyingMob):
-        etatMob = listeDyingMob[temp].is_dying(pygame, plateau)
-        if etatMob == "mob is dead":
-            #si le mob est mort on le supprime de la liste
-            listeDyingMob.pop(temp)
-            temp -= 1
-        temp += 1
+    #____________________tuer les mobs____________________
+    Mob.killmobs(plateau, listeDyingMob)
 
-    #____________________creer le mob____________________
-    #le mob est crée toutes le x secondes (a preciser sur le if)
+    #____________________creer les mobs____________________
+    #un mob est crée toutes les x secondes (a preciser sur le if)
     if time() - lastMobAt > 0.5 :
-        randomponey = randint(0,2)
-        if randomponey == 0:
-            listeMob.append(Scootaloo(pygame, plateau))
-        elif randomponey == 1:
-            listeMob.append(AppleBloom(pygame, plateau))
-        else:
-            listeMob.append(SweetieBelle(pygame, plateau))
-        lastMobAt = time()
+        lastMobAt = Mob.spawnmobs(plateau, listeMob)
 
 
-    clock.tick(30) #en fps, valeur+grande = jeu + rapide
+    clock.tick(30) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 
 pygame.quit()

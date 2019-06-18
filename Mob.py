@@ -1,9 +1,14 @@
+from pygame.locals import *
 from random import randint
+from time import *
+import pygame
+
+#direction sert pour bouger les mobs
 direction = [(-1,0),(0,1),(1,0),(0,-1)] #haut,droite,bas,gauche
 
 class Mob:
 
-    def __init__(self, pygame, plateau, speed = 1, pv = 100, wasat = 3, dying = 3):
+    def __init__(self, plateau, speed = 1, pv = 100, wasat = 3, dying = 3):
         #on set la position initiale du mob
         for posy in range(len(plateau.Matrice)):
             for posx in range(len(plateau.Matrice[posy])):
@@ -24,7 +29,7 @@ class Mob:
         self.wasat = wasat        #le mob considere de base qu'il viens de la gauche
         self.dying = dying
         
-    def move_to_next_pos(self, pygame, plateau):
+    def move_to_next_pos(self, plateau):
         directiondispo = dict()
         if self.posx % 30 == 0 and self.posy % 30 == 0:
             try:
@@ -48,8 +53,7 @@ class Mob:
                     else:
                         pass
             except IndexError:
-                #si il y a un IndexError, c'est que le mob regarde le coté de la map,
-                #donc pas une direction valable
+                #si il y a un IndexError, c'est que le mob regarde le coté de la map, donc pas une direction valable
                 pass
         else:
             directiondispo = {(self.wasat + 2) % 4 : direction[(self.wasat + 2) % 4]}
@@ -78,19 +82,56 @@ class Mob:
             listeDyingMob.append(self)
             
 
-    def is_dying(self, pygame, plateau):
+    def is_dying(self, plateau):
         if self.dying > 0 :
             plateau.fenetre.blit(self.dyingSkin, (self.posx, self.posy))
         else:
             return "mob is dead"
         self.dying -= 1
-            
 
+
+    #_______________________Fonctions statiques_________________________
+    @staticmethod
+    def spawnmobs(plateau, listeMob):
+        randomponey = randint(0,2)
+        if randomponey == 0:
+            listeMob.append(Scootaloo(plateau))
+        elif randomponey == 1:
+            listeMob.append(AppleBloom(plateau))
+        else:
+            listeMob.append(SweetieBelle(plateau))
+        return time()
+
+    @staticmethod
+    def movemobs(plateau, listeMob):
+        temp = 0
+        while temp < len(listeMob):
+            newPosMob = listeMob[temp].move_to_next_pos(plateau)
+            if newPosMob == "mob is stuck":
+                #si le mob est bloqué on le supprime pour l'instant
+                listeMob.pop(temp)
+                temp -= 1
+            temp += 1
+
+
+    @staticmethod
+    def killmobs(plateau, listeDyingMob):
+        temp = 0
+        while temp < len(listeDyingMob):
+            etatMob = listeDyingMob[temp].is_dying(plateau)
+            if etatMob == "mob is dead":
+                #si le mob est mort on le supprime de la liste
+                listeDyingMob.pop(temp)
+                temp -= 1
+            temp += 1
+
+
+#____________________________Sous classes de Mob________________________
 
 class Scootaloo(Mob):
 
-    def __init__(self, pygame, plateau):
-        Mob.__init__(self, pygame, plateau, speed = 3, pv = 25)
+    def __init__(self, plateau):
+        Mob.__init__(self, plateau, speed = 3, pv = 25)
 
         self.type = "earth"
         
@@ -102,8 +143,8 @@ class Scootaloo(Mob):
 
 class AppleBloom(Mob):
 
-    def __init__(self, pygame, plateau):
-        Mob.__init__(self, pygame, plateau, speed = 6, pv = 75)
+    def __init__(self, plateau):
+        Mob.__init__(self, plateau, speed = 6, pv = 75)
 
         self.type = "earth"
         
@@ -114,8 +155,8 @@ class AppleBloom(Mob):
 
         
 class SweetieBelle(Mob):
-    def __init__(self, pygame, plateau):
-        Mob.__init__(self, pygame, plateau, speed = 5, pv = 50)
+    def __init__(self, plateau):
+        Mob.__init__(self, plateau, speed = 5, pv = 50)
 
         self.type = "earth" #magic?
         

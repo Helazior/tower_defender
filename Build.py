@@ -12,7 +12,7 @@ def convertPixelMatrice(pos):
     return (int(pos[0]/30), int(pos[1]/30))
 
 class Build :
-    def  __init__(self, pygame, plateau, pos, brange = 100, damage = 50, taille = 2):
+    def  __init__(self, pygame, plateau, pos, brange = 200, damage = 10, taille = 2):
 
         #charge la tour
         tour = pygame.image.load("tour.png").convert_alpha()
@@ -35,20 +35,18 @@ class Build :
             for j in range(taille):
                 plateau.Matrice[posM[1]+j][posM[0]+i] = 9 #mettre images
         
-    def attack(self,listMob):
-        if listMob == []:
+    def attack(self, listeMob, listeDyingMob):
+        if listeMob == []:
             pass
         else:
-            for i in range(len(listMob)) :
-                mob = listMob[i]
+            for i in range(len(listeMob)) :
+                mob = listeMob[i]
                 distance = sqrt(((self.posx - mob.posx)**2)+((self.posy - mob.posy)**2))
                 if  distance <= self.range :
                     
                     mob.pv -= self.damage
-                    print(i)
+                    print(i, mob.pv)
 
-                    
-                    if mob.pv <= 0:
-                         listMob.pop(i)
-                         print(mort)
+                    mob.is_it_dying(listeMob, i, listeDyingMob)
+
                     break

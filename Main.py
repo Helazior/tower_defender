@@ -27,6 +27,7 @@ listeDyingMob = list()
 lastMobAt = 0
 #setup pour la creation de tour
 listeTour = list()
+taille = 2      #en vrai c'est pas utile la mais je sais pas si tu va faire des batiments de differentes tailles donc je met ça comme ça
 
 continuer = True
 
@@ -42,26 +43,25 @@ while continuer: #tout ce passe là dedans
             
         #_________________poser une tour___________________
         if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = event.pos
+            (x,y) = event.pos
+            #ça c'est pour que le clique soit centré par rapport a la tour qu'il fait apparaitre, c'est juste (a - 30/taille , b - 30/taille)
+            pos = (x - 30/taille , y - 30/taille)
             posMatrice = convertPixelMatrice(pos)
-            if posMatrice[0] < 39 and posMatrice[1] < 19:
-                for k in range(2):
-                    for l in range(2):
-                        conditionSolVide = 1
-                        for i in range(2):
-                            for j in range(2):
-                                y = posMatrice[1] + j - l
-                                x = posMatrice[0] + i - k
+            conditionSolVide = True
+            try:
+                for i in range(taille):
+                    for j in range(taille):
+                        (y, x) = (posMatrice[1] + i , posMatrice[0] + j)
+                        if plateau.Matrice[y][x] != 0 :
+                            conditionSolVide = False
+                            break             
+            except IndexError:
+                #si il y a une index error c'est qu'on est en dehors de la matrice
+                conditionSolVide = False
 
-                                if y < 0 or y > plateau.nbCasesY or x < 0 or x > plateau.nbCasesX:
-                                    conditionSolVide = 0
-
-                                conditionSolVide *= (plateau.Matrice[y][x] == 0)
-                        if conditionSolVide:
-                            listeTour.append(Build(plateau, (pos[0] - 30*k, pos[1] - 30*l)))
-                            break
-                    if conditionSolVide:
-                        break
+            if conditionSolVide:
+                #création de la tour
+                listeTour.append(Build(plateau, pos))
 
     #____________________bouger les mobs____________________
     #on affiche le fond de base pour effacer les mobs
@@ -86,3 +86,28 @@ while continuer: #tout ce passe là dedans
     pygame.display.flip() #rafraichit l'image
 
 pygame.quit()
+
+"""
+        #_________________poser une tour___________________
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            pos = event.pos
+            posMatrice = convertPixelMatrice(pos)
+            if posMatrice[0] < 39 and posMatrice[1] < 19:
+                for k in range(2):
+                    for l in range(2):
+                        conditionSolVide = 1
+                        for i in range(2):
+                            for j in range(2):
+                                y = posMatrice[1] + j - l
+                                x = posMatrice[0] + i - k
+
+                                if y < 0 or y > plateau.nbCasesY or x < 0 or x > plateau.nbCasesX:
+                                    conditionSolVide = 0
+
+                                conditionSolVide *= (plateau.Matrice[y][x] == 0)
+                        if conditionSolVide:
+                            listeTour.append(Build(plateau, (pos[0] - 30*k, pos[1] - 30*l)))
+                            break
+                    if conditionSolVide:
+                        break
+"""

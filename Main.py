@@ -50,7 +50,13 @@ while continuer: #tout ce passe là dedans
                         conditionSolVide = 1
                         for i in range(2):
                             for j in range(2):
-                                conditionSolVide *= (plateau.Matrice[posMatrice[1] + j - l][posMatrice[0] + i - k] == 0)
+                                y = posMatrice[1] + j - l
+                                x = posMatrice[0] + i - k
+
+                                if y < 0 or y > plateau.nbCasesY or x < 0 or x > plateau.nbCasesX:
+                                    conditionSolVide = 0
+
+                                conditionSolVide *= (plateau.Matrice[y][x] == 0)
                         if conditionSolVide:
                             listeTour.append(Build(pygame, plateau, (pos[0] - 30*k, pos[1] - 30*l)))
                             break

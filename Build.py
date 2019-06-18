@@ -42,16 +42,15 @@ class Build :
         if listeMob == []:
             pass
         else:
-            for i in range(len(listeMob)) :
-                mob = listeMob[i]
-                if time() - self.tempsDernierTir >= self.attenteTir: #attente d'une seconde avant de retirer
-                    self.tempsDernierTir = time()
+            if time() - self.tempsDernierTir >= self.attenteTir: #attente d'une seconde avant de retirer
+                self.tempsDernierTir = time()
+                for posliste in range(len(listeMob)) :
+                    mob = listeMob[posliste]
                     distance = sqrt(((self.posx - mob.posx)**2)+((self.posy - mob.posy)**2))
-                    print(distance)
                     if  distance <= self.range :
                         mob.pv -= self.damage
-                        print(f"numéro{i} a été touché, il lui reste {mob.pv} pv")
+                        print(f"Mob numéro {posliste} a été touché, il lui reste {mob.pv} pv")
 
-                        mob.is_it_dying(listeMob, i, listeDyingMob)
+                        mob.is_it_dying(listeMob, posliste, listeDyingMob)
 
                         break

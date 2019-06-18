@@ -58,7 +58,7 @@ while continuer: #tout ce passe là dedans
 
                                 conditionSolVide *= (plateau.Matrice[y][x] == 0)
                         if conditionSolVide:
-                            listeTour.append(Build(pygame, plateau, (pos[0] - 30*k, pos[1] - 30*l)))
+                            listeTour.append(Build(plateau, (pos[0] - 30*k, pos[1] - 30*l)))
                             break
                     if conditionSolVide:
                         break

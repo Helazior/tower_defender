@@ -65,7 +65,7 @@ while continuer: #tout ce passe là dedans
     #____________________la tour attaque____________________
     #la condition sera aussi faite en méthode statique, mais je veux déjà que ça marche normalement
     for tour in listeTour:
-        tour.attack(listeMob, listeDyingMob)
+        tour.attack(plateau, listeMob, listeDyingMob)
 
 
     #____________________bouger les mobs____________________

@@ -32,13 +32,13 @@ class Build :
         self.attenteTir = attenteTir
         self.range = brange
         self.damage = damage
-        self.tempsDernierTir = time()
+        self.tempsDernierTir = time() - attenteTir
 
         for i in range(taille):
             for j in range(taille):
                 plateau.Matrice[posM[1]+j][posM[0]+i] = 9 #mettre images
         
-    def attack(self, listeMob, listeDyingMob):
+    def attack(self, plateau, listeMob, listeDyingMob):
         if listeMob == []:
             pass
         else:
@@ -46,11 +46,22 @@ class Build :
                 self.tempsDernierTir = time()
                 for posliste in range(len(listeMob)) :
                     mob = listeMob[posliste]
-                    distance = sqrt(((self.posx - mob.posx)**2)+((self.posy - mob.posy)**2))
+                    distance = sqrt(((self.posx - mob.posx + 15)**2)+((self.posy - mob.posy + 15)**2))
                     if  distance <= self.range :
+                        self.tir(plateau, (self.posx + 15, self.posy + 15), (mob.posx + 15, mob.posy + 15)) #annimation du tir
                         mob.pv -= self.damage
                         print(f"Mob numéro {posliste} a été touché, il lui reste {mob.pv} pv")
 
                         mob.is_it_dying(listeMob, posliste, listeDyingMob)
 
                         break
+
+
+
+
+    @staticmethod
+    def tir(plateau, posTour, porMob):
+        print(posTour)
+        red = (255,0,0)
+        pygame.draw.line(plateau.fenetre, red, posTour, porMob) #fait un trait de la tour jusqu'au mob
+        pygame.display.flip()  #rafraichit

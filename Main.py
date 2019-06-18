@@ -62,16 +62,18 @@ while continuer: #tout ce passe là dedans
                             break
                     if conditionSolVide:
                         break
-    #____________________la tour attaque____________________
-    #la condition sera aussi faite en méthode statique, mais je veux déjà que ça marche normalement
-    for tour in listeTour:
-        tour.attack(plateau, listeMob, listeDyingMob)
+
 
 
     #____________________bouger les mobs____________________
     #on affiche le fond de base pour effacer les mobs
     plateau.fenetre.blit(plateau.copy_fond, (0,0))
     Mob.movemobs(plateau, listeMob)
+
+    #____________________la tour attaque____________________
+    #je l'ai mis au milieu des tes fonctions pour que le rayon reste un peu plus longtemps
+    for tour in listeTour:
+        tour.attack(plateau, listeMob, listeDyingMob)
         
     #____________________tuer les mobs____________________
     Mob.killmobs(plateau, listeDyingMob)

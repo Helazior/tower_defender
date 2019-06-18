@@ -63,8 +63,6 @@ while continuer: #tout ce passe là dedans
                     if conditionSolVide:
                         break
 
-
-
     #____________________bouger les mobs____________________
     #on affiche le fond de base pour effacer les mobs
     plateau.fenetre.blit(plateau.copy_fond, (0,0))

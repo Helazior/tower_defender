@@ -57,4 +57,3 @@ class Build :
     def tir(plateau, posTour, porMob):
         red = (255,0,0)
         pygame.draw.line(plateau.fenetre, red, posTour, porMob) #fait un trait rouge de la tour jusqu'au mob
-        pygame.display.flip()  #rafraichit

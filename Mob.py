@@ -8,7 +8,7 @@ direction = [(-1,0),(0,1),(1,0),(0,-1)] #haut,droite,bas,gauche
 
 class Mob:
 
-    def __init__(self, plateau, speed = 1, pv = 100, wasat = 3, dying = 3):
+    def __init__(self, plateau, speed = 1, pv = 100, wasat = 3, dying = 10):
         #on set la position initiale du mob
         for posy in range(len(plateau.Matrice)):
             for posx in range(len(plateau.Matrice[posy])):

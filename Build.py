@@ -44,7 +44,7 @@ class Build :
                     if  distance <= self.range :
                         self.tir(plateau, (self.posx, self.posy), (mob.posx + 15, mob.posy + 15)) #annimation du tir
                         mob.pv -= self.damage
-                        print(f"Mob numéro {posliste} a été touché, il lui reste {mob.pv} pv")
+                        print(f"Mob {posliste} touché, lui reste {mob.pv} pv")
 
                         mob.is_it_dying(listeMob, posliste, listeDyingMob)
 
@@ -55,7 +55,6 @@ class Build :
 
     @staticmethod
     def tir(plateau, posTour, porMob):
-        print(posTour)
         red = (255,0,0)
         pygame.draw.line(plateau.fenetre, red, posTour, porMob) #fait un trait rouge de la tour jusqu'au mob
         pygame.display.flip()  #rafraichit

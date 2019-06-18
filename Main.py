@@ -44,8 +44,8 @@ while continuer: #tout ce passe là dedans
         #_________________poser une tour___________________
         if event.type == pygame.MOUSEBUTTONDOWN:
             (x,y) = event.pos
-            #ça c'est pour que le clique soit centré par rapport a la tour qu'il fait apparaitre, c'est juste (a - 30/taille , b - 30/taille)
-            pos = (x - 30/taille , y - 30/taille)
+            #ça c'est pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
+            pos = (x - 15*(taille - 1) , y - 15*(taille - 1))
             posMatrice = convertPixelMatrice(pos)
             conditionSolVide = True
             try:

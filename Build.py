@@ -4,6 +4,11 @@ from Mob import Mob
 
 import pygame
 
+def testToPlaceABuilding():
+    def wrapper():
+        return
+    return wrapper()
+
 def convertPixelMatrice(pos):
     return (int(pos[0]/30), int(pos[1]/30))
 
@@ -52,8 +57,30 @@ class Build :
 
 
 
+    #________________________staticmethod_______________________
 
     @staticmethod
     def tir(plateau, posTour, porMob):
         red = (255,0,0)
         pygame.draw.line(plateau.fenetre, red, posTour, porMob) #fait un trait rouge de la tour jusqu'au mob
+
+
+    @staticmethod
+    def set_up(plateau, pos, taille, listeTour):
+        (x,y) = pos
+        pos = (x - 15*(taille - 1) , y - 15*(taille - 1)) #pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
+        posMatrice = convertPixelMatrice(pos)
+        conditionSolVide = True
+        try:
+            for i in range(taille):
+                for j in range(taille):
+                    (y, x) = (posMatrice[1] + i , posMatrice[0] + j)
+                    if plateau.Matrice[y][x] != 0 :
+                        conditionSolVide = False
+                        break             
+        except IndexError:
+            #si il y a une index error c'est qu'on est en dehors de la matrice
+            conditionSolVide = False
+
+        if conditionSolVide:
+            listeTour.append(Build(plateau, pos)) #création de la tour

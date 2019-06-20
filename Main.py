@@ -43,25 +43,8 @@ while continuer: #tout ce passe là dedans
             
         #_________________poser une tour___________________
         if event.type == pygame.MOUSEBUTTONDOWN:
-            (x,y) = event.pos
-            #ça c'est pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
-            pos = (x - 15*(taille - 1) , y - 15*(taille - 1))
-            posMatrice = convertPixelMatrice(pos)
-            conditionSolVide = True
-            try:
-                for i in range(taille):
-                    for j in range(taille):
-                        (y, x) = (posMatrice[1] + i , posMatrice[0] + j)
-                        if plateau.Matrice[y][x] != 0 :
-                            conditionSolVide = False
-                            break             
-            except IndexError:
-                #si il y a une index error c'est qu'on est en dehors de la matrice
-                conditionSolVide = False
-
-            if conditionSolVide:
-                #création de la tour
-                listeTour.append(Build(plateau, pos))
+            Build.set_up(plateau, event.pos, taille, listeTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+                
 
     #____________________bouger les mobs____________________
     #on affiche le fond de base pour effacer les mobs
@@ -87,27 +70,4 @@ while continuer: #tout ce passe là dedans
 
 pygame.quit()
 
-"""
-        #_________________poser une tour___________________
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            pos = event.pos
-            posMatrice = convertPixelMatrice(pos)
-            if posMatrice[0] < 39 and posMatrice[1] < 19:
-                for k in range(2):
-                    for l in range(2):
-                        conditionSolVide = 1
-                        for i in range(2):
-                            for j in range(2):
-                                y = posMatrice[1] + j - l
-                                x = posMatrice[0] + i - k
 
-                                if y < 0 or y > plateau.nbCasesY or x < 0 or x > plateau.nbCasesX:
-                                    conditionSolVide = 0
-
-                                conditionSolVide *= (plateau.Matrice[y][x] == 0)
-                        if conditionSolVide:
-                            listeTour.append(Build(plateau, (pos[0] - 30*k, pos[1] - 30*l)))
-                            break
-                    if conditionSolVide:
-                        break
-"""

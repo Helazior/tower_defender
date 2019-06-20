@@ -4,11 +4,6 @@ from Mob import Mob
 
 import pygame
 
-def testToPlaceABuilding():
-    def wrapper():
-        return
-    return wrapper()
-
 def convertPixelMatrice(pos):
     return (int(pos[0]/30), int(pos[1]/30))
 

@@ -41,7 +41,7 @@ class Build :
                     if  distance <= self.range :
                         self.tir(plateau, (self.posx, self.posy), (mob.posx + 15, mob.posy + 15)) #annimation du tir
                         mob.pv -= self.damage
-                        print(f"Mob {posliste} touché, lui reste {mob.pv} pv")
+                        #print(f"Mob {posliste} touché, lui reste {mob.pv} pv")
 
                         mob.is_it_dying(listeMob, posliste, listeDyingMob)
 
@@ -80,9 +80,10 @@ class Build :
 
 class Tour(Build):
     """docstring for tour"""
-    def __init__(self, plateau, pos, brange = 200, damage = 10, taille = 2, attenteTir = 0.5):
-        self.taille = taille
+    taille = 2
+
+    def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.5):
 
         imageTour = pygame.image.load("tour.png").convert_alpha()
         self.imageTour = imageTour
-        Build.__init__(self, plateau, pos, brange, damage, taille, attenteTir, imageTour)
+        Build.__init__(self, plateau, pos, brange, damage, Tour.taille, attenteTir, imageTour)

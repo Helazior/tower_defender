@@ -28,8 +28,6 @@ lastMobAt = 0
 #setup pour la creation de tour
 listeTour = list()
 
-taille = 2 #faut trouver le moyen de faire réference à la tour de la tour, mais avant qu'elle soit init, avec un dict ?
-
 continuer = True
 
 #_________________________________________________boucle principale:_________________________________________________
@@ -44,7 +42,8 @@ while continuer: #tout ce passe là dedans
             
         #_________________poser une tour___________________
         if event.type == pygame.MOUSEBUTTONDOWN:
-            Tour.set_up(plateau, event.pos, taille, listeTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+            print(clock.get_fps())
+            Tour.set_up(plateau, event.pos, Tour.taille, listeTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
                 
 
     #____________________bouger les mobs____________________

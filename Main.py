@@ -26,7 +26,7 @@ listeMob = list()
 listeDyingMob = list()
 lastMobAt = 0
 #setup pour la creation de tour
-listeTour = list()
+dicoTour = dict()
 
 continuer = True
 
@@ -42,8 +42,8 @@ while continuer: #tout ce passe là dedans
             
         #_________________poser une tour___________________
         if event.type == pygame.MOUSEBUTTONDOWN:
-            print(clock.get_fps())
-            Tour.set_up(plateau, event.pos, Tour.taille, listeTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+            #print(clock.get_fps()) #affiche les vrais fps
+            Tour.set_up(plateau, event.pos, Tour.taille, dicoTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
                 
 
     #____________________bouger les mobs____________________
@@ -52,8 +52,7 @@ while continuer: #tout ce passe là dedans
     Mob.movemobs(plateau, listeMob)
 
     #____________________la tour attaque____________________
-    #je l'ai mis au milieu des tes fonctions pour que le rayon reste un peu plus longtemps
-    for tour in listeTour:
+    for tour in dicoTour.values():
         tour.attack(plateau, listeMob, listeDyingMob)
         
     #____________________tuer les mobs____________________

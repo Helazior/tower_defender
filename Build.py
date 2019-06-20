@@ -16,6 +16,7 @@ class Build :
         
         plateau.fenetre.blit(plateau.copy_fond, (0, 0))
         plateau.fenetre.blit(bulding, (posM[0]*30, posM[1]*30))
+
         
         plateau.copy_fond = pygame.display.get_surface().copy()
         self.posx = pos[0] // 30 * 30 + 15*taille # on centre le position
@@ -58,7 +59,7 @@ class Build :
 
 
     @staticmethod
-    def set_up(plateau, pos, taille, listeTour):
+    def set_up(plateau, pos, taille, dicoTour):
         (x,y) = pos
         pos = (x - 15*(taille - 1) , y - 15*(taille - 1)) #pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
         posMatrice = convertPixelMatrice(pos)
@@ -75,7 +76,7 @@ class Build :
             conditionSolVide = False
 
         if conditionSolVide:
-            listeTour.append(Tour(plateau, pos)) #création de la tour
+            dicoTour[pos] = Tour(plateau, pos) #création de la tour
 
 
 class Tour(Build):

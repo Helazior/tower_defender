@@ -27,7 +27,8 @@ listeDyingMob = list()
 lastMobAt = 0
 #setup pour la creation de tour
 listeTour = list()
-taille = 2      #en vrai c'est pas utile la mais je sais pas si tu va faire des batiments de differentes tailles donc je met ça comme ça
+
+taille = 2 #faut trouver le moyen de faire réference à la tour de la tour, mais avant qu'elle soit init, avec un dict ?
 
 continuer = True
 
@@ -43,7 +44,7 @@ while continuer: #tout ce passe là dedans
             
         #_________________poser une tour___________________
         if event.type == pygame.MOUSEBUTTONDOWN:
-            Build.set_up(plateau, event.pos, taille, listeTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+            Tour.set_up(plateau, event.pos, taille, listeTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
                 
 
     #____________________bouger les mobs____________________

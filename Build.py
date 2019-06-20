@@ -8,17 +8,14 @@ def convertPixelMatrice(pos):
     return (int(pos[0]/30), int(pos[1]/30))
 
 class Build :
-    def  __init__(self, plateau, pos, brange = 200, damage = 10, taille = 2, attenteTir = 0.5):
+    def  __init__(self, plateau, pos, brange, damage, taille, attenteTir, bulding):
 
-        #charge la tour
-        tour = pygame.image.load("tour.png").convert_alpha()
-        self.imageTour = tour
 
         #affiche la tour
         posM = convertPixelMatrice(pos)
         
         plateau.fenetre.blit(plateau.copy_fond, (0, 0))
-        plateau.fenetre.blit(tour, (posM[0]*30, posM[1]*30))
+        plateau.fenetre.blit(bulding, (posM[0]*30, posM[1]*30))
         
         plateau.copy_fond = pygame.display.get_surface().copy()
         self.posx = pos[0] // 30 * 30 + 15*taille # on centre le position
@@ -78,4 +75,14 @@ class Build :
             conditionSolVide = False
 
         if conditionSolVide:
-            listeTour.append(Build(plateau, pos)) #création de la tour
+            listeTour.append(Tour(plateau, pos)) #création de la tour
+
+
+class Tour(Build):
+    """docstring for tour"""
+    def __init__(self, plateau, pos, brange = 200, damage = 10, taille = 2, attenteTir = 0.5):
+        self.taille = taille
+
+        imageTour = pygame.image.load("tour.png").convert_alpha()
+        self.imageTour = imageTour
+        Build.__init__(self, plateau, pos, brange, damage, taille, attenteTir, imageTour)

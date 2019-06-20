@@ -27,6 +27,7 @@ listeDyingMob = list()
 lastMobAt = 0
 #setup pour la creation de tour
 dicoTour = dict()
+selectBuild = False
 
 continuer = True
 
@@ -39,11 +40,15 @@ while continuer: #tout ce passe là dedans
             
         if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte 
             continuer = False
-            
+
+       #__________________séléction batiment_______________
+        elif event.type == pygame.MOUSEMOTION:
+            selectBuild, posSelect = Build.is_build(plateau, event.pos, dicoTour)
+
         #_________________poser une tour___________________
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             #print(clock.get_fps()) #affiche les vrais fps
-            Tour.set_up(plateau, event.pos, Tour.taille, dicoTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+            Tour.set_up(plateau, event.pos, dicoTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
                 
 
     #____________________bouger les mobs____________________
@@ -51,7 +56,7 @@ while continuer: #tout ce passe là dedans
     plateau.fenetre.blit(plateau.copy_fond, (0,0))
     Mob.movemobs(plateau, listeMob)
 
-    #____________________la tour attaque____________________
+    #____________________tour attaque______________________
     for tour in dicoTour.values():
         tour.attack(plateau, listeMob, listeDyingMob)
         
@@ -62,6 +67,10 @@ while continuer: #tout ce passe là dedans
     #un mob est crée toutes les x secondes (a preciser sur le if)
     if time() - lastMobAt > 0.5 :
         lastMobAt = Mob.spawnmobs(plateau, listeMob)
+
+    #____________________affiche la range des tours_________ plus les infos
+    if selectBuild:
+        Build.info_build(plateau, posSelect, dicoTour)
 
 
     clock.tick(30) #en fps, valeur +grande = jeu + rapide

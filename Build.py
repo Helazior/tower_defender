@@ -59,8 +59,9 @@ class Build :
 
 
     @staticmethod
-    def set_up(plateau, pos, taille, dicoTour):
+    def set_up(plateau, pos, dicoTour):
         (x,y) = pos
+        taille = Tour.taille
         pos = (x - 15*(taille - 1) , y - 15*(taille - 1)) #pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
         posMatrice = convertPixelMatrice(pos)
         conditionSolVide = True
@@ -76,7 +77,27 @@ class Build :
             conditionSolVide = False
 
         if conditionSolVide:
-            dicoTour[pos] = Tour(plateau, pos) #création de la tour
+            posx = pos[0] // 30 * 30 + 15*Tour.taille
+            posy = pos[1] // 30 * 30 + 15*Tour.taille
+            dicoTour[(posx,posy)] = Tour(plateau, pos) #création de la tour
+
+    @staticmethod
+    def is_build(plateau, pos, dicoTour):
+        posx = (pos[0] - 15) // 30 * 30 + 15*Tour.taille  #ne marche pas pour taille > 2 et il faut viser pile le carré
+        posy = (pos[1] - 15) // 30 * 30 + 15*Tour.taille
+        pos = (posx,posy)
+        try:
+            dicoTour[pos]
+            return True, pos
+        except:
+            return False, pos
+
+    @staticmethod
+    def info_build(plateau, pos, dicoTour):
+        white = (200,200,200)
+        pygame.draw.circle(plateau.fenetre, white, pos, dicoTour[pos].range, 1)
+        pygame.display.flip()
+
 
 
 class Tour(Build):

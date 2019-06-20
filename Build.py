@@ -56,31 +56,32 @@ class Build :
     @staticmethod
     def tir(plateau, posTour, porMob):
         red = (255,0,0)
-        pygame.draw.line(plateau.fenetre, red, posTour, porMob, 3) #fait un trait rouge de la tour jusqu'au mob, 3 est la grosseur
+        pygame.draw.line(plateau.fenetre, red, posTour, porMob, 6) #fait un trait rouge de la tour jusqu'au mob, 3 est la grosseur
 
 
     @staticmethod
     def set_up(plateau, pos, dicoTour):
         (x,y) = pos
-        taille = Tour.taille
-        pos = (x - 15*(taille - 1) , y - 15*(taille - 1)) #pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
-        posMatrice = convertPixelMatrice(pos)
-        conditionSolVide = True
-        try:
-            for i in range(taille):
-                for j in range(taille):
-                    (y, x) = (posMatrice[1] + i , posMatrice[0] + j)
-                    if plateau.Matrice[y][x] != 0 :
-                        conditionSolVide = False
-                        break             
-        except IndexError:
-            #si il y a une index error c'est qu'on est en dehors de la matrice
-            conditionSolVide = False
+        if x > 15 and y > 15:
+            taille = Tour.taille
+            pos = (x - 15*(taille - 1) , y - 15*(taille - 1)) #pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
+            posMatrice = convertPixelMatrice(pos)
+            freeSpace = True
+            try:
+                for i in range(taille):
+                    for j in range(taille):
+                        (y, x) = (posMatrice[1] + i , posMatrice[0] + j)
+                        if plateau.Matrice[y][x] != 0 :
+                            freeSpace = False
+                            break             
+            except IndexError:
+                #si il y a une index error c'est qu'on est en dehors de la matrice
+                freeSpace = False
 
-        if conditionSolVide:
-            posx = pos[0] // 30 * 30 + 15*Tour.taille
-            posy = pos[1] // 30 * 30 + 15*Tour.taille
-            dicoTour[(posx,posy)] = Tour(plateau, pos) #création de la tour#bug du tir décalé lorsqu'on met la tour tout au bord à corriger (rajouter condition)
+            if freeSpace:
+                posx = pos[0] // 30 * 30 + 15*Tour.taille
+                posy = pos[1] // 30 * 30 + 15*Tour.taille
+                dicoTour[(posx,posy)] = Tour(plateau, pos) #création de la tour#bug du tir décalé lorsqu'on met la tour tout au bord à corriger (rajouter condition)
 
     @staticmethod
     def is_build(plateau, pos, dicoTour):

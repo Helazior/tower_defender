@@ -30,16 +30,17 @@ class Build :
             for j in range(taille):
                 plateau.Matrice[posM[1]+j][posM[0]+i] = 9 #mettre images
         
+
     def attack(self, plateau, listeMob, listeDyingMob):
         if listeMob == []:
             pass
         else:
-            if time() - self.tempsDernierTir >= self.attenteTir: #attente d'une seconde avant de retirer
-                self.tempsDernierTir = time()
+            if time() - self.tempsDernierTir >= self.attenteTir: #attente avant de retirer
                 for posliste in range(len(listeMob)) :
                     mob = listeMob[posliste]
                     distance = sqrt(((self.posx - mob.posx + 15)**2)+((self.posy - mob.posy + 15)**2))
                     if  distance <= self.range :
+                        self.tempsDernierTir = time()
                         self.tir(plateau, (self.posx, self.posy), (mob.posx + 15, mob.posy + 15)) #annimation du tir
                         mob.pv -= self.damage
                         #print(f"Mob {posliste} touché, lui reste {mob.pv} pv")
@@ -55,7 +56,7 @@ class Build :
     @staticmethod
     def tir(plateau, posTour, porMob):
         red = (255,0,0)
-        pygame.draw.line(plateau.fenetre, red, posTour, porMob) #fait un trait rouge de la tour jusqu'au mob
+        pygame.draw.line(plateau.fenetre, red, posTour, porMob, 3) #fait un trait rouge de la tour jusqu'au mob, 3 est la grosseur
 
 
     @staticmethod
@@ -79,7 +80,7 @@ class Build :
         if conditionSolVide:
             posx = pos[0] // 30 * 30 + 15*Tour.taille
             posy = pos[1] // 30 * 30 + 15*Tour.taille
-            dicoTour[(posx,posy)] = Tour(plateau, pos) #création de la tour
+            dicoTour[(posx,posy)] = Tour(plateau, pos) #création de la tour#bug du tir décalé lorsqu'on met la tour tout au bord à corriger (rajouter condition)
 
     @staticmethod
     def is_build(plateau, pos, dicoTour):
@@ -96,7 +97,7 @@ class Build :
     def info_build(plateau, pos, dicoTour):
         white = (200,200,200)
         pygame.draw.circle(plateau.fenetre, white, pos, dicoTour[pos].range, 1)
-        pygame.display.flip()
+        #pygame.display.flip()
 
 
 

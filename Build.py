@@ -4,7 +4,7 @@ from Mob import Mob
 
 import pygame
 
-def convertPixelMatrice(pos):
+def convertPixelMatrice(pos):#à mettre dans plateau je pense, mais faudra importer plateau après
     return (int(pos[0]/30), int(pos[1]/30))
 
 class Build :
@@ -31,22 +31,27 @@ class Build :
                 plateau.Matrice[posM[1]+j][posM[0]+i] = 9 #mettre images
         
 
-    def attack(self, plateau, listeMob, listeDyingMob):
+    def attack(self, plateau, listeMob, listeDyingMob, listeMobPriorityTarget):
         if listeMob == []:
             pass
         else:
             if time() - self.tempsDernierTir >= self.attenteTir: #attente avant de retirer
-                for posliste in range(len(listeMob)) :
-                    mob = listeMob[posliste]
+                listeMobAndPriority = listeMobPriorityTarget + listeMob # listeMobPriorityTarget devant sera lue en première
+                for posInListe in range(len(listeMobAndPriority)) :
+                    mob = listeMobAndPriority[posInListe]
                     distance = sqrt(((self.posx - mob.posx + 15)**2)+((self.posy - mob.posy + 15)**2))
                     if  distance <= self.range :
                         self.tempsDernierTir = time()
                         self.tir(plateau, (self.posx, self.posy), (mob.posx + 15, mob.posy + 15)) #annimation du tir
                         mob.pv -= self.damage
-                        #print(f"Mob {posliste} touché, lui reste {mob.pv} pv")
+                        #print(f"Mob {posInListe} touché, lui reste {mob.pv} pv")
 
-                        mob.is_it_dying(listeMob, posliste, listeDyingMob)
-
+                        mob.is_it_dying(listeMob, posInListe - len(listeMobPriorityTarget) , listeDyingMob)
+                        if mob.pv <= 0:
+                            try:
+                                listeMobPriorityTarget.pop(posInListe)
+                            except:
+                                pass
                         break
 
 
@@ -56,7 +61,7 @@ class Build :
     @staticmethod
     def tir(plateau, posTour, porMob):
         red = (255,0,0)
-        pygame.draw.line(plateau.fenetre, red, posTour, porMob, 6) #fait un trait rouge de la tour jusqu'au mob, 3 est la grosseur
+        pygame.draw.line(plateau.fenetre, red, posTour, porMob, 3) #fait un trait rouge de la tour jusqu'au mob, 3 est la grosseur
 
 
     @staticmethod

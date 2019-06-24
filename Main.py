@@ -23,6 +23,7 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 plateau = Plateau(pygame)
 #setup pour la creation de mob
 listeMob = list()
+listeMobPriorityTarget = list()
 listeDyingMob = list()
 lastMobAt = 0
 #setup pour la creation de tour
@@ -41,14 +42,35 @@ while continuer: #tout ce passe là dedans
         if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte 
             continuer = False
 
-       #__________________séléction batiment_______________
+       #______________________séléction batiment________________________________________
         elif event.type == pygame.MOUSEMOTION:
             selectBuild, posSelect = Build.is_build(plateau, event.pos, dicoTour)
 
-        #_________________poser une tour___________________
+        
         elif event.type == pygame.MOUSEBUTTONDOWN:
             #print(clock.get_fps()) #affiche les vrais fps
+            #_________________poser une tour______________________________________________
             Tour.set_up(plateau, event.pos, dicoTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+
+
+            #_________________séléctionner un mob pour le mettre en priorité______________
+            # à faire dans une méthode statique de mob
+            posSouris = event.pos
+            (xMatrice, yMatrice) = convertPixelMatrice(posSouris)
+            
+            try:
+                caseMatrice = plateau.Matrice[yMatrice][xMatrice]
+            except:
+                pass
+
+
+            if caseMatrice > 0 and caseMatrice < 9:#si on est sur le chemin
+                listeDistanceMobs = ([((mob.posx + 15 - posSouris[0])**2 + (mob.posy + 15 - posSouris[1])**2)**(1/2) for mob in listeMob]) #distance des mob par rapport à la souris
+                numMobLePlusProche = listeDistanceMobs.index(min(listeDistanceMobs))
+                mobSelect = listeMob[numMobLePlusProche]
+                if listeDistanceMobs[numMobLePlusProche] < 30 and not(mobSelect in listeMobPriorityTarget):
+                    listeMobPriorityTarget.append(mobSelect) #ajoute dans la liste des mobs à tuer en priorité. 
+
                 
 
     #____________________bouger les mobs____________________
@@ -58,14 +80,14 @@ while continuer: #tout ce passe là dedans
 
     #____________________tour attaque______________________
     for tour in dicoTour.values():
-        tour.attack(plateau, listeMob, listeDyingMob)
+        tour.attack(plateau, listeMob, listeDyingMob, listeMobPriorityTarget)
         
     #____________________tuer les mobs____________________
     Mob.killmobs(plateau, listeDyingMob)
 
     #____________________creer les mobs____________________
     #un mob est crée toutes les x secondes (a preciser sur le if)
-    if time() - lastMobAt > 0.5 :
+    if time() - lastMobAt > 1 :
         lastMobAt = Mob.spawnmobs(plateau, listeMob)
 
     #____________________affiche la range des tours_________ plus les infos
@@ -73,7 +95,7 @@ while continuer: #tout ce passe là dedans
         Build.info_build(plateau, posSelect, dicoTour)
 
 
-    clock.tick(30) #en fps, valeur +grande = jeu + rapide
+    clock.tick(15) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 
 pygame.quit()

@@ -1,4 +1,4 @@
-def initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice): #crée et affiche la fenêtre
+def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et affiche la fenêtre
     pygame.display.set_caption("Tower Defender !")
 
     fenetre = pygame.display.set_mode(tailleFenetre)

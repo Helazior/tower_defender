@@ -1,3 +1,11 @@
+"""
+- 0,1,2,3,4 pour choisir le block correspondant (0 par défaut)
+- clique pour poser un block
+- rester appuyer et bouger la souris pour poser plein de blocks
+- 's' pour enregistrer (en fait pour l'instant ça enregistre automatiquement quand on quitte)
+
+fileName est le nom du fichier texte, il doit exister.
+"""
 import pygame
 from pygame.locals import *
 import sys, os
@@ -15,7 +23,7 @@ clock = pygame.time.Clock() 				#initialise une horloge pour gerer le temps
 
 
 #setup pour le plateau
-fileName = "maptest.txt"
+fileName = "map2.txt"
 plateau = Plateau(pygame, fileName)
 #je charge et convertis les images dans des variables
 fond = pygame.image.load("fond.png").convert()
@@ -24,7 +32,12 @@ chemin4 = pygame.image.load("chemin4.png").convert()
 start = pygame.image.load("start.png").convert_alpha()
 end = pygame.image.load("end.png").convert_alpha()
 
-
+for y in range(len(plateau.Matrice)):
+    for x in range(len(plateau.Matrice[0])):
+        if plateau.Matrice[y][x] == 4:
+            plateau.fenetre.blit(chemin4, (30*x,30*y))
+            pygame.display.flip() #rafraichit l'image
+            
 #______________save_______________
 def save(matrice, fileName):
     try:

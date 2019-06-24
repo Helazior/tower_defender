@@ -30,7 +30,7 @@ class Mob:
         self.wasat = wasat        #le mob considere de base qu'il viens de la gauche
         self.dying = dying
         
-    def move_to_next_pos(self, plateau):
+    def move_to_next_pos(self, plateau, listeMobPriorityTarget):
         directiondispo = dict()
         if self.posx % 30 == 0 and self.posy % 30 == 0:
             try:
@@ -72,19 +72,24 @@ class Mob:
             self.posymatrice = int(self.posy / 30)
             #enfin on deplace visuellement le mob
             plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) #on affiche le mob
+            if self in listeMobPriorityTarget:
+                pygame.draw.circle(plateau.fenetre, (125,0,0), (int(self.posx + 15), int(self.posy + 15)), 22, 1)
 
         except ValueError:
             #si il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
             return "mob is stuck"
         
     def is_it_dying(self, listeMob, mob, listeDyingMob, listeMobPriorityTarget):
-        if self.pv <= 0:
-            listeMob.remove(mob)
-            try:
-                listeMobPriorityTarget.remove(mob)
-            except:
-                pass
-            listeDyingMob.append(self)
+        if not(self in listeDyingMob): #pour reglé un bug rare de ValueError: list.remove(x): x not in list, je ne sais pas si c'était ça
+            if self.pv <= 0:
+                listeMob.remove(mob)
+                try:
+                    listeMobPriorityTarget.remove(mob)
+                except:
+                    pass
+                listeDyingMob.append(self)
+        else:
+            print("erreur réglé")
             
 
     def is_dying(self, plateau):
@@ -108,10 +113,10 @@ class Mob:
         return time()
 
     @staticmethod
-    def movemobs(plateau, listeMob):
+    def movemobs(plateau, listeMob, listeMobPriorityTarget):
         temp = 0
         while temp < len(listeMob):
-            newPosMob = listeMob[temp].move_to_next_pos(plateau)
+            newPosMob = listeMob[temp].move_to_next_pos(plateau, listeMobPriorityTarget)
             if newPosMob == "mob is stuck":
                 #si le mob est bloqué on le supprime pour l'instant
                 listeMob.pop(temp)
@@ -135,14 +140,18 @@ class Mob:
         (xMatrice, yMatrice) = convertPixelMatrice(posSouris) 
         try:
             caseMatrice = plateau.Matrice[yMatrice][xMatrice]
+            if caseMatrice > 0 and caseMatrice < 9:#si on est sur le chemin
+                listeDistanceMobs = ([((mob.posx + 15 - posSouris[0])**2 + (mob.posy + 15 - posSouris[1])**2)**(1/2) for mob in listeMob]) #distance des mob par rapport à la souris
+                numMobLePlusProche = listeDistanceMobs.index(min(listeDistanceMobs))
+                mobSelect = listeMob[numMobLePlusProche]
+                if listeDistanceMobs[numMobLePlusProche] < 30:
+                    if not(mobSelect in listeMobPriorityTarget):
+                        listeMobPriorityTarget.append(mobSelect) #ajoute dans la liste des mobs à tuer en priorité.
+                    else:
+                        listeMobPriorityTarget.remove(mobSelect)
+
         except:
             pass
-        if caseMatrice > 0 and caseMatrice < 9:#si on est sur le chemin
-            listeDistanceMobs = ([((mob.posx + 15 - posSouris[0])**2 + (mob.posy + 15 - posSouris[1])**2)**(1/2) for mob in listeMob]) #distance des mob par rapport à la souris
-            numMobLePlusProche = listeDistanceMobs.index(min(listeDistanceMobs))
-            mobSelect = listeMob[numMobLePlusProche]
-            if listeDistanceMobs[numMobLePlusProche] < 30 and not(mobSelect in listeMobPriorityTarget):
-                listeMobPriorityTarget.append(mobSelect) #ajoute dans la liste des mobs à tuer en priorité. 
 
 
 

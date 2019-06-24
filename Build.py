@@ -55,7 +55,7 @@ class Build :
 
     @staticmethod
     def tir(plateau, posTour, porMob):
-        red = (255,0,0)
+        red = (175,0,0)
         pygame.draw.line(plateau.fenetre, red, posTour, porMob, 3) #fait un trait rouge de la tour jusqu'au mob, 3 est la grosseur
 
 
@@ -96,7 +96,7 @@ class Build :
 
     @staticmethod
     def info_build(plateau, pos, dicoTour):
-        white = (200,200,200)
+        white = (150,150,150)
         pygame.draw.circle(plateau.fenetre, white, pos, dicoTour[pos].range, 1)
         #pygame.display.flip()
 
@@ -106,7 +106,7 @@ class Tour(Build):
     """docstring for tour"""
     taille = 2
 
-    def __init__(self, plateau, pos, brange = 200, damage = 100, attenteTir = 0.5):
+    def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.5):
 
         imageTour = pygame.image.load("tour.png").convert_alpha()
         self.imageTour = imageTour

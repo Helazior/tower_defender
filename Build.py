@@ -39,7 +39,7 @@ class Build :
                 listeMobAndPriority = listeMobPriorityTarget + listeMob # listeMobPriorityTarget devant sera lue en première
                 for posInListe in range(len(listeMobAndPriority)) :
                     mob = listeMobAndPriority[posInListe]
-                    distance = sqrt(((self.posx - mob.posx + 15)**2)+((self.posy - mob.posy + 15)**2))
+                    distance = sqrt(((self.posx - (mob.posx + 15))**2)+((self.posy - (mob.posy + 15))**2))
                     if  distance <= self.range :
                         self.tempsDernierTir = time()
                         self.tir(plateau, (self.posx, self.posy), (mob.posx + 15, mob.posy + 15)) #annimation du tir
@@ -106,7 +106,7 @@ class Tour(Build):
     """docstring for tour"""
     taille = 2
 
-    def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.5):
+    def __init__(self, plateau, pos, brange = 200, damage = 100, attenteTir = 0.5):
 
         imageTour = pygame.image.load("tour.png").convert_alpha()
         self.imageTour = imageTour

@@ -46,12 +46,7 @@ class Build :
                         mob.pv -= self.damage
                         #print(f"Mob {posInListe} touché, lui reste {mob.pv} pv")
 
-                        mob.is_it_dying(listeMob, posInListe - len(listeMobPriorityTarget) , listeDyingMob)
-                        if mob.pv <= 0:
-                            try:
-                                listeMobPriorityTarget.pop(posInListe)
-                            except:
-                                pass
+                        mob.is_it_dying(listeMob, mob, listeDyingMob, listeMobPriorityTarget)                           
                         break
 
 

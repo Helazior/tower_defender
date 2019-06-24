@@ -54,9 +54,7 @@ while continuer: #tout ce passe là dedans
 
 
             #_________________séléctionner un mob pour le mettre en priorité______________
-            # à faire dans une méthode statique de mob
-            posSouris = event.pos
-            Mob.prioritizemob(plateau, listeMob, listeMobPriorityTarget, posSouris)
+            Mob.prioritizemob(plateau, listeMob, listeMobPriorityTarget, event.pos)
                 
 
     #____________________bouger les mobs____________________
@@ -73,7 +71,7 @@ while continuer: #tout ce passe là dedans
 
     #____________________creer les mobs____________________
     #un mob est crée toutes les x secondes (a preciser sur le if)
-    if time() - lastMobAt > 1 :
+    if time() - lastMobAt > .5 :
         lastMobAt = Mob.spawnmobs(plateau, listeMob)
 
     #____________________affiche la range des tours_________ plus les infos

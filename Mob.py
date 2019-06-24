@@ -77,9 +77,13 @@ class Mob:
             #si il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
             return "mob is stuck"
         
-    def is_it_dying(self, listeMob, posliste, listeDyingMob):
+    def is_it_dying(self, listeMob, mob, listeDyingMob, listeMobPriorityTarget):
         if self.pv <= 0:
-            listeMob.pop(posliste)
+            listeMob.remove(mob)
+            try:
+                listeMobPriorityTarget.remove(mob)
+            except:
+                pass
             listeDyingMob.append(self)
             
 

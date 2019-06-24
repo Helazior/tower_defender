@@ -28,23 +28,29 @@ def initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice): #crée et af
 
 
 
-def creationMatrice(tailleFenetre, nbCasesX, nbCasesY):
+def creationMatrice(tailleFenetre, nbCasesX, nbCasesY, fileName):
     Matrice = [0]*nbCasesY #on met des O sur toute la hauteur de la future matrice
     for i in range (nbCasesY):
         Matrice[i] = [0]*nbCasesX
         #on crait la matrice de la map avec des 0
 
     #On fait la map à partir du fichier texte
-    with open("map.txt","r") as fichier:    #ouverture du fichier texte
+    with open(fileName,"r") as fichier:    #ouverture du fichier texte
         texte_grille = fichier.read()
         liste_grille = texte_grille.split("\n") #On fait une liste du fichier texte, qui sséparée à chaque saut à la ligne
 
+        messageErreur = False
         for i in range(nbCasesX):
             for j in range(nbCasesY):
                 try:
                     Matrice[j][i] = int(liste_grille[j][i])
                 except:
-                    print("ERREUR, le fichier texte de la map n'est pas de la bonne dim")
+                    if not(messageErreur):
+                        if texte_grille == "":
+                            print("Nouvelle map")
+                        else:
+                            print("ERROR: fichier txt de mauvaise dim")
+                        messageErreur = 1
                 
     return Matrice
     
@@ -54,7 +60,7 @@ def creationMatrice(tailleFenetre, nbCasesX, nbCasesY):
 
 class Plateau: #classe de la map attributs: Matrice, nbCasesX, nbCasesY, tailleFenetre, fenetre
 
-    def __init__(self, pygame):
+    def __init__(self, pygame, fileName):
         nbCasesX = 40
         nbCasesY = 20
         tailleFenetre = (nbCasesX*30 + 80,nbCasesY*30 + 80)
@@ -62,7 +68,7 @@ class Plateau: #classe de la map attributs: Matrice, nbCasesX, nbCasesY, tailleF
         self.nbCasesX = nbCasesX
         self.nbCasesY = nbCasesY
         self.tailleFenetre = tailleFenetre
-        Matrice = creationMatrice(tailleFenetre, nbCasesX, nbCasesY)
+        Matrice = creationMatrice(tailleFenetre, nbCasesX, nbCasesY, fileName)
         self.Matrice = Matrice
 
         margeFenetreGauche = 15

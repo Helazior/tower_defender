@@ -5,7 +5,7 @@ from Mob import *
 import pygame
 
 def convertPixelMatrice(pos):#à mettre dans plateau je pense, mais faudra importer plateau après
-    return (int(pos[0]/30), int(pos[1]/30))
+    return (pos[0]//30, pos[1]//30)
 
 class Build :
     def  __init__(self, plateau, pos, brange, damage, taille, attenteTir, bulding):

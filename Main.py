@@ -20,7 +20,7 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 #__________________________________________________création map:_____________________________________________________
 
 #setup pour le plateau
-plateau = Plateau(pygame)
+plateau = Plateau(pygame, "map.txt")
 #setup pour la creation de mob
 listeMob = list()
 listeMobPriorityTarget = list()

@@ -1,5 +1,6 @@
 from pygame.locals import *
 from random import randint
+from Build import *
 from time import *
 import pygame
 
@@ -124,6 +125,21 @@ class Mob:
                 listeDyingMob.pop(temp)
                 temp -= 1
             temp += 1
+
+    @staticmethod
+    def prioritizemob(plateau, listeMob, listeMobPriorityTarget, posSouris):
+        (xMatrice, yMatrice) = convertPixelMatrice(posSouris) 
+        try:
+            caseMatrice = plateau.Matrice[yMatrice][xMatrice]
+        except:
+            pass
+        if caseMatrice > 0 and caseMatrice < 9:#si on est sur le chemin
+            listeDistanceMobs = ([((mob.posx + 15 - posSouris[0])**2 + (mob.posy + 15 - posSouris[1])**2)**(1/2) for mob in listeMob]) #distance des mob par rapport à la souris
+            numMobLePlusProche = listeDistanceMobs.index(min(listeDistanceMobs))
+            mobSelect = listeMob[numMobLePlusProche]
+            if listeDistanceMobs[numMobLePlusProche] < 30 and not(mobSelect in listeMobPriorityTarget):
+                listeMobPriorityTarget.append(mobSelect) #ajoute dans la liste des mobs à tuer en priorité. 
+
 
 
 #____________________________Sous classes de Mob________________________

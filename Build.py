@@ -1,6 +1,6 @@
 from math import sqrt
 from time import time
-from Mob import Mob
+from Mob import *
 
 import pygame
 

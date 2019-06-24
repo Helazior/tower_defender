@@ -56,21 +56,7 @@ while continuer: #tout ce passe là dedans
             #_________________séléctionner un mob pour le mettre en priorité______________
             # à faire dans une méthode statique de mob
             posSouris = event.pos
-            (xMatrice, yMatrice) = convertPixelMatrice(posSouris)
-            
-            try:
-                caseMatrice = plateau.Matrice[yMatrice][xMatrice]
-            except:
-                pass
-
-
-            if caseMatrice > 0 and caseMatrice < 9:#si on est sur le chemin
-                listeDistanceMobs = ([((mob.posx + 15 - posSouris[0])**2 + (mob.posy + 15 - posSouris[1])**2)**(1/2) for mob in listeMob]) #distance des mob par rapport à la souris
-                numMobLePlusProche = listeDistanceMobs.index(min(listeDistanceMobs))
-                mobSelect = listeMob[numMobLePlusProche]
-                if listeDistanceMobs[numMobLePlusProche] < 30 and not(mobSelect in listeMobPriorityTarget):
-                    listeMobPriorityTarget.append(mobSelect) #ajoute dans la liste des mobs à tuer en priorité. 
-
+            Mob.prioritizemob(plateau, listeMob, listeMobPriorityTarget, posSouris)
                 
 
     #____________________bouger les mobs____________________

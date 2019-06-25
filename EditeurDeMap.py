@@ -1,6 +1,6 @@
 """
 - 0,1,2,3,4 pour choisir le bloc correspondant (0 par défaut)
-- clique pour poser un block
+- clique pour poser un bloc
 - rester appuyer et bouger la souris pour poser plein de blocs
 - 's' pour enregistrer (en fait pour l'instant ça enregistre automatiquement quand on quitte)
 
@@ -23,7 +23,7 @@ clock = pygame.time.Clock() 				#initialise une horloge pour gerer le temps
 
 
 #setup pour le plateau
-fileName = "map2.txt"
+fileName = "map.txt"
 plateau = Plateau(pygame, fileName)
 #je charge et convertis les images dans des variables
 fond = pygame.image.load("fond.png").convert()

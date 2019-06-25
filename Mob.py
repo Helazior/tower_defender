@@ -207,7 +207,7 @@ class SweetieBelle(Mob):
 class RainbowDash(Mob):
 
     def __init__(self, plateau):
-        Mob.__init__(self, plateau, speed = 1, pv = 25)
+        Mob.__init__(self, plateau, speed = 2, pv = 1)
 
         self.type = "pegasus"
         

@@ -9,6 +9,8 @@ direction = [(-1,0),(0,1),(1,0),(0,-1)] #haut,droite,bas,gauche
 
 class Mob:
 
+    nbrMobFini = 0
+    
     def __init__(self, plateau, speed = 1, pv = 100, wasat = 5, dying = 10):
         #on set la position initiale du mob
         for posy in range(len(plateau.Matrice)):
@@ -23,6 +25,7 @@ class Mob:
                 #sort de la boucle s'il a trouvé
                 break 
         #on set toutes les variables
+            self.fini = False
         self.speed = 30 * (1/speed)
         self.pv = pv
         posxmax = len(plateau.Matrice[0]) #ou Plateau.nbCasesX
@@ -43,6 +46,7 @@ class Mob:
                     elif plateau.Matrice[self.posymatrice + y][self.posxmatrice + x] == 3:
                         #force le mob a finir si la case de fin est a coté
                         directiondispo = {i:direction[i]}
+                        self.fini = True
                         break
                     elif plateau.Matrice[self.posymatrice + y][self.posxmatrice + x] == 4:
                         #force le mob a aller dans la bonne direction
@@ -118,7 +122,12 @@ class Mob:
         while temp < len(listeMob):
             newPosMob = listeMob[temp].move_to_next_pos(plateau, listeMobPriorityTarget)
             if newPosMob == "mob is stuck":
-                #si le mob est bloqué on le supprime pour l'instant
+                #si le mob est bloqué on le supprime
+                listeMob.pop(temp)
+                temp -= 1
+            elif listeMob[temp].fini == True :
+                Mob.nbrMobFini += 1
+                print(Mob.nbrMobFini)
                 listeMob.pop(temp)
                 temp -= 1
             temp += 1

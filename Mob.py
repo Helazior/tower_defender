@@ -121,11 +121,7 @@ class Mob:
         temp = 0
         while temp < len(listeMob):
             newPosMob = listeMob[temp].move_to_next_pos(plateau, listeMobPriorityTarget)
-            if newPosMob == "mob is stuck":
-                #si le mob est bloqué on le supprime
-                listeMob.pop(temp)
-                temp -= 1
-            elif listeMob[temp].fini == True :
+            if listeMob[temp].fini == True :
                 Mob.nbrMobFini += 1
                 print(Mob.nbrMobFini)
                 listeMob.pop(temp)

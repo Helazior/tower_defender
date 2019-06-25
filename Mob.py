@@ -169,7 +169,7 @@ class Mob:
 class Scootaloo(Mob):
 
     def __init__(self, plateau):
-        Mob.__init__(self, plateau, speed = 3, pv = 25)
+        Mob.__init__(self, plateau, speed = 8, pv = 25)
 
         self.type = "earth"
         
@@ -182,7 +182,7 @@ class Scootaloo(Mob):
 class AppleBloom(Mob):
 
     def __init__(self, plateau):
-        Mob.__init__(self, plateau, speed = 6, pv = 75)
+        Mob.__init__(self, plateau, speed = 16, pv = 75)
 
         self.type = "earth"
         
@@ -194,7 +194,7 @@ class AppleBloom(Mob):
         
 class SweetieBelle(Mob):
     def __init__(self, plateau):
-        Mob.__init__(self, plateau, speed = 5, pv = 50)
+        Mob.__init__(self, plateau, speed = 12, pv = 50)
 
         self.type = "earth" #magic?
         

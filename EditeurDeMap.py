@@ -1,11 +1,16 @@
+
 """
+_______________help________________
+
 - 0,1,2,3,4 pour choisir le bloc correspondant (0 par défaut)
 - clique pour poser un bloc
 - rester appuyer et bouger la souris pour poser plein de blocs
 - 's' pour enregistrer (en fait pour l'instant ça enregistre automatiquement quand on quitte)
+- 'u' pour revenir à la dernière sauvegarde, utile pour ne pas enregistrer ('z' était trop proche de 's')
 
-fileName est le nom du fichier texte, il doit exister.
+- fileName est le nom du fichier texte, il doit exister.
 """
+
 import pygame
 from pygame.locals import *
 import sys, os
@@ -23,7 +28,7 @@ clock = pygame.time.Clock() 				#initialise une horloge pour gerer le temps
 
 
 #setup pour le plateau
-fileName = "map.txt"
+fileName = "map2.txt"   #mettre un fichier txt existant qui peut-être vide
 plateau = Plateau(pygame, fileName)
 #je charge et convertis les images dans des variables
 fond = pygame.image.load("fond.png").convert()
@@ -32,11 +37,14 @@ chemin4 = pygame.image.load("chemin4.png").convert()
 start = pygame.image.load("start.png").convert_alpha()
 end = pygame.image.load("end.png").convert_alpha()
 
-for y in range(len(plateau.Matrice)):
-    for x in range(len(plateau.Matrice[0])):
-        if plateau.Matrice[y][x] == 4:
-            plateau.fenetre.blit(chemin4, (30*x,30*y))
-            pygame.display.flip() #rafraichit l'image
+def to_show_the_4(plateau, chemin4):
+    for y in range(len(plateau.Matrice)):
+        for x in range(len(plateau.Matrice[0])):
+            if plateau.Matrice[y][x] == 4:
+                plateau.fenetre.blit(chemin4, (30*x,30*y))
+                pygame.display.flip() #rafraichit l'image
+
+to_show_the_4(plateau, chemin4) #affiche un 4 sur toutes les cases 4
             
 #______________save_______________
 def save(matrice, fileName):
@@ -107,9 +115,12 @@ while continuer: #tout ce passe là dedans
             except:
                 if event.key == K_s: #appuyer sur 's' pour sauvegarder la map
                     save(plateau.Matrice, fileName)
+                elif event.key == K_u:
+                	plateau = Plateau(pygame, fileName)
+                	to_show_the_4(plateau, chemin4)
 
 
-    clock.tick(30) #en fps, valeur +grande = jeu + rapide
+    clock.tick(60) #en fps, valeur +grande = jeu + rapide
 
 
 

@@ -15,6 +15,9 @@ class Build :
         posM = convertPixelMatrice(pos)
         
         plateau.fenetre.blit(plateau.copy_fond, (0, 0))
+        for i in range(taille):
+            for j in range(taille):
+                plateau.fenetre.blit(plateau.brokenHouse, ((posM[0]+i)*30, (posM[1]+j)*30))
         plateau.fenetre.blit(bulding, (posM[0]*30, posM[1]*30))
 
         
@@ -28,7 +31,7 @@ class Build :
 
         for i in range(taille):
             for j in range(taille):
-                plateau.Matrice[posM[1]+j][posM[0]+i] = 9 #mettre images
+                plateau.Matrice[posM[1]+j][posM[0]+i] = 9 
         
 
     def attack(self, plateau, listeMob, listeDyingMob, listeMobPriorityTarget):
@@ -71,7 +74,7 @@ class Build :
                 for i in range(taille):
                     for j in range(taille):
                         (y, x) = (posMatrice[1] + i , posMatrice[0] + j)
-                        if plateau.Matrice[y][x] != 0 :
+                        if plateau.Matrice[y][x] != 5 :
                             freeSpace = False
                             break             
             except IndexError:

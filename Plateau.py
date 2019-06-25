@@ -1,3 +1,5 @@
+from random import randint
+
 def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et affiche la fenêtre
     pygame.display.set_caption("Tower Defender !")
 
@@ -8,6 +10,16 @@ def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et a
     chemin = pygame.image.load("chemin.png").convert()
     start = pygame.image.load("start.png").convert_alpha()
     end = pygame.image.load("end.png").convert_alpha()
+    house1 = pygame.image.load("background/House11.png").convert_alpha()
+    house2 = pygame.image.load("background/House21.png").convert_alpha()
+    house3 = pygame.image.load("background/House31.png").convert_alpha()
+    house4 = pygame.image.load("background/House41.png").convert_alpha()
+    house5 = pygame.image.load("background/House51.png").convert_alpha()
+    house6 = pygame.image.load("background/House61.png").convert_alpha()
+    house7 = pygame.image.load("background/House71.png").convert_alpha()
+    brokenHouse = pygame.image.load("background/BrokenHouse.png").convert_alpha()
+
+    dictHouse = {1: house1, 2: house2, 3: house3, 4: house4, 5: house5, 6: house6, 7: house7}
 
     fond = pygame.transform.scale(fond, tailleFenetre) #l'image de fond fait la taille de la fenêtre
     fenetre.blit(fond, (0,0)) #affiche le fond à la position (0,0)
@@ -20,11 +32,13 @@ def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et a
                 fenetre.blit(start, (30*i, 30*j)) #on place le start
             elif Matrice[j][i] == 3:
                 fenetre.blit(end, (30*i, 30*j))  #on place l'arrivé des mobs
+            elif Matrice[j][i] == 5:
+                fenetre.blit(dictHouse[randint(1,7)], (30*i, 30*j))
 
     pygame.display.flip() #rafraichit l'image !
 
     copy_fond = pygame.display.get_surface().copy() #Copie du fond pour faire bouger les trucs devant
-    return fenetre, copy_fond
+    return fenetre, copy_fond, brokenHouse
 
 
 
@@ -74,4 +88,4 @@ class Plateau: #classe de la map attributs: Matrice, nbCasesX, nbCasesY, tailleF
         margeFenetreGauche = 15
         margeFenetreHaut = 15
         
-        self.fenetre, self.copy_fond = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice)
+        self.fenetre, self.copy_fond, self.brokenHouse = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice)

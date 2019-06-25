@@ -28,7 +28,7 @@ clock = pygame.time.Clock() 				#initialise une horloge pour gerer le temps
 
 
 #setup pour le plateau
-fileName = "map2.txt"   #mettre un fichier txt existant qui peut-être vide
+fileName = "map.txt"   #mettre un fichier txt existant qui peut-être vide
 plateau = Plateau(pygame, fileName)
 #je charge et convertis les images dans des variables
 fond = pygame.image.load("fond.png").convert()
@@ -116,8 +116,8 @@ while continuer: #tout ce passe là dedans
                 if event.key == K_s: #appuyer sur 's' pour sauvegarder la map
                     save(plateau.Matrice, fileName)
                 elif event.key == K_u:
-                	plateau = Plateau(pygame, fileName)
-                	to_show_the_4(plateau, chemin4)
+                    plateau = Plateau(pygame, fileName)
+                    to_show_the_4(plateau, chemin4)
 
 
     clock.tick(60) #en fps, valeur +grande = jeu + rapide

@@ -1,7 +1,7 @@
 """
-- 0,1,2,3,4 pour choisir le block correspondant (0 par défaut)
+- 0,1,2,3,4 pour choisir le bloc correspondant (0 par défaut)
 - clique pour poser un block
-- rester appuyer et bouger la souris pour poser plein de blocks
+- rester appuyer et bouger la souris pour poser plein de blocs
 - 's' pour enregistrer (en fait pour l'instant ça enregistre automatiquement quand on quitte)
 
 fileName est le nom du fichier texte, il doit exister.

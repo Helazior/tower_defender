@@ -113,7 +113,7 @@ class Mob:
         elif randomponey == 1:
             listeMob.append(AppleBloom(plateau))
         else:
-            listeMob.append(SweetieBelle(plateau))
+            listeMob.append(RainbowDash(plateau))
         return time()
 
     @staticmethod
@@ -204,6 +204,17 @@ class SweetieBelle(Mob):
         plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) 
 
 
+class RainbowDash(Mob):
+
+    def __init__(self, plateau):
+        Mob.__init__(self, plateau, speed = 1, pv = 25)
+
+        self.type = "pegasus"
+        
+        #on attribue au mob une image et on l'affiche
+        self.aliveSkin = pygame.image.load("RainbowDashAlive.png").convert_alpha()
+        self.dyingSkin = pygame.image.load("RainbowDashDying.png").convert_alpha()
+        plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) 
 
 
 

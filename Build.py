@@ -54,16 +54,16 @@ class Build :
     #________________________staticmethod_______________________
 
     @staticmethod
-    def tir(plateau, posTour, porMob):
+    def tir(plateau, posStalker, porMob):
         red = (175,0,0)
-        pygame.draw.line(plateau.fenetre, red, posTour, porMob, 3) #fait un trait rouge de la tour jusqu'au mob, 3 est la grosseur
+        pygame.draw.line(plateau.fenetre, red, posStalker, porMob, 3) #fait un trait rouge de la tour jusqu'au mob, 3 est la grosseur
 
 
     @staticmethod
     def set_up(plateau, pos, dicoTour):
         (x,y) = pos
         if x > 15 and y > 15:
-            taille = Tour.taille
+            taille = Stalker.taille
             pos = (x - 15*(taille - 1) , y - 15*(taille - 1)) #pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
             posMatrice = convertPixelMatrice(pos)
             freeSpace = True
@@ -79,14 +79,14 @@ class Build :
                 freeSpace = False
 
             if freeSpace:
-                posx = pos[0] // 30 * 30 + 15*Tour.taille
-                posy = pos[1] // 30 * 30 + 15*Tour.taille
-                dicoTour[(posx,posy)] = Tour(plateau, pos) #création de la tour#bug du tir décalé lorsqu'on met la tour tout au bord à corriger (rajouter condition)
+                posx = pos[0] // 30 * 30 + 15*Stalker.taille
+                posy = pos[1] // 30 * 30 + 15*Stalker.taille
+                dicoTour[(posx,posy)] = Stalker(plateau, pos) #création de la tour#bug du tir décalé lorsqu'on met la tour tout au bord à corriger (rajouter condition)
 
     @staticmethod
     def is_build(plateau, pos, dicoTour):
-        posx = (pos[0] - 15) // 30 * 30 + 15*Tour.taille  #ne marche pas pour taille > 2 et il faut viser pile le carré
-        posy = (pos[1] - 15) // 30 * 30 + 15*Tour.taille
+        posx = (pos[0] - 15) // 30 * 30 + 15*Stalker.taille  #ne marche pas pour taille > 2 et il faut viser pile le carré
+        posy = (pos[1] - 15) // 30 * 30 + 15*Stalker.taille
         pos = (posx,posy)
         try:
             dicoTour[pos]
@@ -102,12 +102,20 @@ class Build :
 
 
 
-class Tour(Build):
+class Stalker(Build):
     """docstring for tour"""
     taille = 2
 
-    def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.5):
+    def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.7):
 
-        imageTour = pygame.image.load("tour.png").convert_alpha()
-        self.imageTour = imageTour
-        Build.__init__(self, plateau, pos, brange, damage, Tour.taille, attenteTir, imageTour)
+        self.imageStalker = plateau.imageStalker
+        Build.__init__(self, plateau, pos, brange, damage, Stalker.taille, attenteTir, plateau.imageStalker)
+
+class Sentry(Build):
+    """docstring for tour"""
+    taille = 1
+
+    def __init__(self, plateau, pos, brange = 130, damage = 3, attenteTir = 0.4):
+
+        self.imageSentry = plateau.imageSentry
+        Build.__init__(self, plateau, pos, brange, damage, Sentry.taille, attenteTir, plateau.imageStalker)

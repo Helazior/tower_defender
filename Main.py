@@ -28,6 +28,8 @@ listeDyingMob = list()
 lastMobAt = 0
 #setup pour la creation de tour
 dicoTour = dict()
+dicoToursMenu = {(1200, 50) : Stalker, (1200, 150) : Sentry} #dictionnaire des tours par leur position pour cliquer dessus
+tourSelect = None
 selectBuild = False
 
 continuer = True
@@ -44,18 +46,28 @@ while continuer: #tout ce passe là dedans
 
        #______________________séléction batiment________________________________________
         elif event.type == pygame.MOUSEMOTION:
-            selectBuild, posSelect = Build.is_build(plateau, event.pos, dicoTour)
-
-        
+            posSouris = event.pos
+            if tourSelect == None:
+                selectBuild, posSelect = Build.is_build(plateau, posSouris, dicoTour)
+                
         elif event.type == pygame.MOUSEBUTTONDOWN:
             #print(clock.get_fps()) #affiche les vrais fps
-            #_________________poser une tour______________________________________________
-            Tour.set_up(plateau, event.pos, dicoTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
-
+            #_________________séléctionner une tour_______________________________________
+            (posx, posy) = (event.pos[0], event.pos[1])
+            if posx >= 1200:
+                tourSelect = Stalker
+            else:
+                tourSelect = None
 
             #_________________séléctionner un mob pour le mettre en priorité______________
             Mob.prioritizemob(plateau, listeMob, listeMobPriorityTarget, event.pos)
-                
+
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if tourSelect != None:
+                #_________________poser une tour__________________________________________
+                tourSelect.set_up(plateau, event.pos, dicoTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+                tourSelect = None
+
 
     #____________________bouger les mobs____________________
     #on affiche le fond de base pour effacer les mobs
@@ -77,9 +89,11 @@ while continuer: #tout ce passe là dedans
     #____________________affiche la range des tours_________ plus les infos
     if selectBuild:
         Build.info_build(plateau, posSelect, dicoTour)
+    #____________________affiche la tour séléctionné________ 
+    if tourSelect != None:
+        plateau.fenetre.blit(plateau.imageStalker, (posSouris[0] - 30, posSouris[1] - 30))
 
-
-    clock.tick(15) #en fps, valeur +grande = jeu + rapide
+    clock.tick(45) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 
 pygame.quit()

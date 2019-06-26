@@ -11,7 +11,17 @@ def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et a
     chemin = pygame.image.load("chemin.png").convert()
     start = pygame.image.load("start.png").convert_alpha()
     end = pygame.image.load("end.png").convert_alpha()
+    imageStalker = pygame.image.load("stalker.png").convert_alpha()
+    imageStalkerMenu = pygame.image.load("stalkerMenu.png").convert_alpha()
+    imageSentry = pygame.image.load("sentry.png").convert_alpha()
+    imageSentryMenu = pygame.image.load("sentryMenu.png").convert_alpha()
 
+    fondMenu = pygame.image.load("fondMenu.png").convert_alpha()
+
+    fenetre.blit(pygame.transform.scale(fondMenu, (1280, 680)), (0, 0))
+
+    fenetre.blit(imageStalkerMenu, (1200, 50))
+    fenetre.blit(imageSentryMenu, (1200, 150))
 
     for i in range(nbCasesX):
         for j in range(nbCasesY):
@@ -30,7 +40,7 @@ def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et a
     pygame.display.flip() #rafraichit l'image !
 
     copy_fond = pygame.display.get_surface().copy() #Copie du fond pour faire bouger les trucs devant
-    return fenetre, copy_fond
+    return fenetre, copy_fond, imageStalker, imageSentry
 
 
 
@@ -80,4 +90,4 @@ class Plateau: #classe de la map attributs: Matrice, nbCasesX, nbCasesY, tailleF
         margeFenetreGauche = 15
         margeFenetreHaut = 15
         
-        self.fenetre, self.copy_fond = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice)
+        self.fenetre, self.copy_fond, self.imageStalker, self.imageSentry  = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice)

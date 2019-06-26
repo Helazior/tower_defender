@@ -69,9 +69,8 @@ while continuer: #tout ce passe là dedans
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if tourSelect != None:
-                print("ok",tourSelect)
                 #_________________poser une tour__________________________________________
-                Sentry.set_up(plateau, event.pos, dicoTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+                Build.set_up(plateau, event.pos, dicoTour, tourSelect) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
                 tourSelect = None
 
 

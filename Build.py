@@ -60,10 +60,10 @@ class Build :
 
 
     @staticmethod
-    def set_up(plateau, pos, dicoTour):
+    def set_up(plateau, pos, dicoTour, tour):
         (x,y) = pos
         if x > 15 and y > 15:
-            taille = Stalker.taille
+            taille = tour.taille
             pos = (x - 15*(taille - 1) , y - 15*(taille - 1)) #pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
             posMatrice = convertPixelMatrice(pos)
             freeSpace = True
@@ -79,13 +79,13 @@ class Build :
                 freeSpace = False
 
             if freeSpace:
-                posx = pos[0] // 30 * 30 + 15*Stalker.taille
-                posy = pos[1] // 30 * 30 + 15*Stalker.taille
-                dicoTour[(posx,posy)] = Stalker(plateau, pos) #création de la tour#bug du tir décalé lorsqu'on met la tour tout au bord à corriger (rajouter condition)
+                posx = pos[0] // 30 * 30 + 15*tour.taille
+                posy = pos[1] // 30 * 30 + 15*tour.taille
+                dicoTour[(posx,posy)] = tour(plateau, pos) #création de la tour#bug du tir décalé lorsqu'on met la tour tout au bord à corriger (rajouter condition)
 
     @staticmethod
     def is_build(plateau, pos, dicoTour):
-        posx = (pos[0] - 15) // 30 * 30 + 15*Stalker.taille  #ne marche pas pour taille > 2 et il faut viser pile le carré
+        posx = (pos[0] - 15) // 30 * 30 + 15*Stalker.taille
         posy = (pos[1] - 15) // 30 * 30 + 15*Stalker.taille
         pos = (posx,posy)
         try:

@@ -28,7 +28,8 @@ listeDyingMob = list()
 lastMobAt = 0
 #setup pour la creation de tour
 dicoTour = dict()
-dicoToursMenu = {(1200, 50) : Stalker, (1200, 150) : Sentry} #dictionnaire des tours par leur position pour cliquer dessus
+dicoToursMenu = {1 : Stalker, 2 : Sentry} #dictionnaire des tours par leur position pour cliquer dessus
+dicoImagesMenu = {Stalker : plateau.imageStalker, Sentry : plateau.imageSentry }
 tourSelect = None
 selectBuild = False
 
@@ -44,7 +45,7 @@ while continuer: #tout ce passe là dedans
         if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte 
             continuer = False
 
-       #______________________séléction batiment________________________________________
+       #______________________séléction batiment posé_____________________________________
         elif event.type == pygame.MOUSEMOTION:
             posSouris = event.pos
             if tourSelect == None:
@@ -52,10 +53,14 @@ while continuer: #tout ce passe là dedans
                 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             #print(clock.get_fps()) #affiche les vrais fps
-            #_________________séléctionner une tour_______________________________________
+            #_________________séléction batiment menu_____________________________________
             (posx, posy) = (event.pos[0], event.pos[1])
             if posx >= 1200:
-                tourSelect = Stalker
+                try:
+                    tourSelect = dicoToursMenu[posy // 100]
+                    imageSelect = dicoImagesMenu[tourSelect]
+                except:
+                    pass
             else:
                 tourSelect = None
 
@@ -64,8 +69,9 @@ while continuer: #tout ce passe là dedans
 
         elif event.type == pygame.MOUSEBUTTONUP:
             if tourSelect != None:
+                print("ok",tourSelect)
                 #_________________poser une tour__________________________________________
-                tourSelect.set_up(plateau, event.pos, dicoTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+                Sentry.set_up(plateau, event.pos, dicoTour) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
                 tourSelect = None
 
 
@@ -91,9 +97,9 @@ while continuer: #tout ce passe là dedans
         Build.info_build(plateau, posSelect, dicoTour)
     #____________________affiche la tour séléctionné________ 
     if tourSelect != None:
-        plateau.fenetre.blit(plateau.imageStalker, (posSouris[0] - 30, posSouris[1] - 30))
+        plateau.fenetre.blit(imageSelect, (posSouris[0] - 15 * tourSelect.taille, posSouris[1] - 15 * tourSelect.taille))
 
-    clock.tick(45) #en fps, valeur +grande = jeu + rapide
+    clock.tick(60) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 
 pygame.quit()

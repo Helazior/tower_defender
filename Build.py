@@ -103,19 +103,19 @@ class Build :
 
 
 class Stalker(Build):
-    """docstring for tour"""
+    """docstring for Stalker"""
     taille = 2
 
     def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.7):
-
+        print("dans Stalker")
         self.imageStalker = plateau.imageStalker
         Build.__init__(self, plateau, pos, brange, damage, Stalker.taille, attenteTir, plateau.imageStalker)
 
 class Sentry(Build):
-    """docstring for tour"""
+    """docstring for Sentry"""
     taille = 1
-
-    def __init__(self, plateau, pos, brange = 130, damage = 3, attenteTir = 0.4):
-
+    
+    def __init__(self, plateau, pos, brange = 100, damage = 3, attenteTir = 0.4):
+        print("dans Sentry")
         self.imageSentry = plateau.imageSentry
-        Build.__init__(self, plateau, pos, brange, damage, Sentry.taille, attenteTir, plateau.imageStalker)
+        Build.__init__(self, plateau, pos, brange, damage, Sentry.taille, attenteTir, plateau.imageSentry)

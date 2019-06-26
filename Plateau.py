@@ -20,8 +20,8 @@ def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et a
 
     fenetre.blit(pygame.transform.scale(fondMenu, (1280, 680)), (0, 0))
 
-    fenetre.blit(imageStalkerMenu, (1200, 50))
-    fenetre.blit(imageSentryMenu, (1200, 150))
+    fenetre.blit(imageStalkerMenu, (1200, 100))
+    fenetre.blit(imageSentryMenu, (1200, 200))
 
     for i in range(nbCasesX):
         for j in range(nbCasesY):

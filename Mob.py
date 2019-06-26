@@ -81,7 +81,7 @@ class Mob:
 
         except ValueError:
             #si il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
-            return "mob is stuck"
+            plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) #on affiche le mob
         
     def is_it_dying(self, listeMob, mob, listeDyingMob, listeMobPriorityTarget):
         if not(self in listeDyingMob): #pour reglé un bug rare de ValueError: list.remove(x): x not in list, je ne sais pas si c'était ça
@@ -123,7 +123,6 @@ class Mob:
             newPosMob = listeMob[temp].move_to_next_pos(plateau, listeMobPriorityTarget)
             if listeMob[temp].fini == True :
                 Mob.nbrMobFini += 1
-                print(Mob.nbrMobFini)
                 listeMob.pop(temp)
                 temp -= 1
             temp += 1

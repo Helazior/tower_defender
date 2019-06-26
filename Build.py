@@ -42,9 +42,13 @@ class Build :
                     distance = sqrt(((self.posx - (mob.posx + 15))**2)+((self.posy - (mob.posy + 15))**2))
                     if  distance <= self.range :
                         self.tempsDernierTir = time()
-                        self.tir(plateau, (self.posx, self.posy), (mob.posx + 15, mob.posy + 15)) #annimation du tir
+                        self.tir(plateau, (self.posx, self.posy), (mob.posx + 15, mob.posy + 15)) #animation du tir
                         mob.pv -= self.damage
                         #print(f"Mob {posInListe} touché, lui reste {mob.pv} pv")
+                        try:
+                            self.damageZone(plateau, listeMob, listeDyingMob, (mob.posx + 15, mob.posy + 15), listeMobPriorityTarget)
+                        except AttributeError:
+                            pass
 
                         mob.is_it_dying(listeMob, mob, listeDyingMob, listeMobPriorityTarget)                           
                         break
@@ -135,16 +139,33 @@ class Sentry(Build):
 class Tank(Build):
     """docstring for Sentry"""
     taille = 3
+    zone = 30
+    dmZone = 50
     
-    def __init__(self, plateau, pos, brange = 250, damage = 50, attenteTir = 3, zone = 60):#rajouter rangeMini et dmZone
+    def __init__(self, plateau, pos, brange = 300, damage = 10, attenteTir = 3, rangeMini = 60):#dmZone se rajoute à damage
         self.imageTank = plateau.imageTank
         Build.__init__(self, plateau, pos, brange, damage, Tank.taille, attenteTir, plateau.imageTank)
+
+    def damageZone(self, plateau, listeMob, listeDyingMob, posTir, listeMobPriorityTarget):
+        (posTirx, posTiry) = posTir
+        for mob in listeMob:
+            distance = sqrt(((mob.posx + 15 - posTirx)**2)+((mob.posy + 15 - posTiry)**2))
+            if distance <= self.zone:
+                print(Tank.dmZone)
+                mob.pv -= Tank.dmZone
+                mob.is_it_dying(listeMob, mob, listeDyingMob, listeMobPriorityTarget)
+
+
 
     @staticmethod
     def tir(plateau, posTank, posMob):
         brown = (175,100,0)
         pygame.draw.line(plateau.fenetre, brown, posTank, posMob, 20) #fait un trait rouge de la tour jusqu'au mob
         plateau.explosion.append(Explosion(plateau, posMob))
+
+
+
+
 
 class Explosion:
     def __init__(self, plateau, pos):

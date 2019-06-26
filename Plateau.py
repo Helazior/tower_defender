@@ -20,6 +20,15 @@ def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et a
 
     fondMenu = pygame.image.load("fondMenu.png").convert_alpha()
 
+    explosion1 = pygame.image.load("explosion/explosion1.png").convert_alpha()
+    explosion2 = pygame.image.load("explosion/explosion2.png").convert_alpha()
+    explosion3 = pygame.image.load("explosion/explosion3.png").convert_alpha()
+    explosion4 = pygame.image.load("explosion/explosion4.png").convert_alpha()
+    explosion5 = pygame.image.load("explosion/explosion5.png").convert_alpha()
+    explosion6 = pygame.image.load("explosion/explosion6.png").convert_alpha()
+
+    animationExplosion = [explosion1, explosion2, explosion3, explosion4, explosion5, explosion6]
+
     fenetre.blit(pygame.transform.scale(fondMenu, (1280, 680)), (0, 0))
 
     fenetre.blit(imageStalkerMenu, (1200, 100))
@@ -43,7 +52,7 @@ def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et a
     pygame.display.flip() #rafraichit l'image !
 
     copy_fond = pygame.display.get_surface().copy() #Copie du fond pour faire bouger les trucs devant
-    return fenetre, copy_fond, imageStalker, imageSentry, imageTank
+    return fenetre, copy_fond, imageStalker, imageSentry, imageTank, animationExplosion
 
 
 
@@ -89,8 +98,9 @@ class Plateau: #classe de la map attributs: Matrice, nbCasesX, nbCasesY, tailleF
         self.tailleFenetre = tailleFenetre
         Matrice = creationMatrice(tailleFenetre, nbCasesX, nbCasesY, fileName)
         self.Matrice = Matrice
+        self.explosion = []
 
         margeFenetreGauche = 15
         margeFenetreHaut = 15
         
-        self.fenetre, self.copy_fond, self.imageStalker, self.imageSentry, self.imageTank  = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice)
+        self.fenetre, self.copy_fond, self.imageStalker, self.imageSentry, self.imageTank, self.animationExplosion  = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice)

@@ -98,6 +98,11 @@ while continuer: #tout ce passe là dedans
     if tourSelect != None:
         plateau.fenetre.blit(imageSelect, (posSouris[0] - 15 * tourSelect.taille, posSouris[1] - 15 * tourSelect.taille))
 
+    #____________________affiche les explosions_____________
+    for explosion in plateau.explosion:
+        explosion.affiche(plateau)
+
+        
     clock.tick(60) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 

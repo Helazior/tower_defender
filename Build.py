@@ -53,10 +53,6 @@ class Build :
 
     #________________________staticmethod_______________________
 
-    @staticmethod
-    def tir(plateau, posStalker, porMob):
-        red = (175,0,0)
-        pygame.draw.line(plateau.fenetre, red, posStalker, porMob, 3) #fait un trait rouge de la tour jusqu'au mob, 3 est la grosseur
 
 
     @staticmethod
@@ -75,13 +71,12 @@ class Build :
                             freeSpace = False
                             break             
             except IndexError:
-                #si il y a une index error c'est qu'on est en dehors de la matrice
                 freeSpace = False
 
             if freeSpace:
                 posx = pos[0] // 30 * 30 + 15*tour.taille
                 posy = pos[1] // 30 * 30 + 15*tour.taille
-                dicoTour[(posx,posy)] = tour(plateau, pos) #création de la tour#bug du tir décalé lorsqu'on met la tour tout au bord à corriger (rajouter condition)
+                dicoTour[(posx,posy)] = tour(plateau, pos) #création de la tour
 
     @staticmethod
     def is_build(plateau, pos, dicoTour):
@@ -117,6 +112,12 @@ class Stalker(Build):
         self.imageStalker = plateau.imageStalker
         Build.__init__(self, plateau, pos, brange, damage, Stalker.taille, attenteTir, plateau.imageStalker)
 
+    @staticmethod
+    def tir(plateau, posStalker, posMob):
+        red = (175,0,0)
+        pygame.draw.line(plateau.fenetre, red, posStalker, posMob, 3) #fait un trait rouge de la tour jusqu'au mob
+
+
 class Sentry(Build):
     """docstring for Sentry"""
     taille = 1
@@ -125,10 +126,33 @@ class Sentry(Build):
         self.imageSentry = plateau.imageSentry
         Build.__init__(self, plateau, pos, brange, damage, Sentry.taille, attenteTir, plateau.imageSentry)
 
+    @staticmethod
+    def tir(plateau, posSentry, posMob):
+        blue = (0,255,100)
+        pygame.draw.line(plateau.fenetre, blue, posSentry, posMob, 3) #fait un trait rouge de la tour jusqu'au mob
+
+
 class Tank(Build):
     """docstring for Sentry"""
     taille = 3
     
-    def __init__(self, plateau, pos, brange = 250, damage = 50, attenteTir = 3):#rajouter rangeMini et dmZone
+    def __init__(self, plateau, pos, brange = 250, damage = 50, attenteTir = 3, zone = 60):#rajouter rangeMini et dmZone
         self.imageTank = plateau.imageTank
         Build.__init__(self, plateau, pos, brange, damage, Tank.taille, attenteTir, plateau.imageTank)
+
+    @staticmethod
+    def tir(plateau, posTank, posMob):
+        brown = (175,100,0)
+        pygame.draw.line(plateau.fenetre, brown, posTank, posMob, 20) #fait un trait rouge de la tour jusqu'au mob
+        plateau.explosion.append(Explosion(plateau, posMob))
+
+class Explosion:
+    def __init__(self, plateau, pos):
+        self.image = 1
+        self.pos = (pos[0] - 30, pos[1] - 30)
+
+    def affiche(self, plateau):
+        plateau.fenetre.blit(plateau.animationExplosion[int(self.image)], self.pos)
+        self.image += 0.2
+        if self.image >= 6:
+            plateau.explosion.remove(self)

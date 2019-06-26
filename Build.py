@@ -114,7 +114,6 @@ class Stalker(Build):
     taille = 2
 
     def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.7):
-        print("dans Stalker")
         self.imageStalker = plateau.imageStalker
         Build.__init__(self, plateau, pos, brange, damage, Stalker.taille, attenteTir, plateau.imageStalker)
 
@@ -123,6 +122,13 @@ class Sentry(Build):
     taille = 1
     
     def __init__(self, plateau, pos, brange = 100, damage = 3, attenteTir = 0.4):
-        print("dans Sentry")
         self.imageSentry = plateau.imageSentry
         Build.__init__(self, plateau, pos, brange, damage, Sentry.taille, attenteTir, plateau.imageSentry)
+
+class Tank(Build):
+    """docstring for Sentry"""
+    taille = 3
+    
+    def __init__(self, plateau, pos, brange = 250, damage = 50, attenteTir = 3):#rajouter rangeMini et dmZone
+        self.imageTank = plateau.imageTank
+        Build.__init__(self, plateau, pos, brange, damage, Tank.taille, attenteTir, plateau.imageTank)

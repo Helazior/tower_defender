@@ -28,8 +28,8 @@ listeDyingMob = list()
 lastMobAt = 0
 #setup pour la creation de tour
 dicoTour = dict()
-dicoToursMenu = {1 : Stalker, 2 : Sentry} #dictionnaire des tours par leur position pour cliquer dessus
-dicoImagesMenu = {Stalker : plateau.imageStalker, Sentry : plateau.imageSentry }
+dicoToursMenu = {1 : Stalker, 2 : Sentry, 3 : Tank} #dictionnaire des tours par leur position pour cliquer dessus
+dicoImagesMenu = {Stalker : plateau.imageStalker, Sentry : plateau.imageSentry, Tank : plateau.imageTank}
 tourSelect = None
 selectBuild = False
 

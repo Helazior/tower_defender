@@ -87,7 +87,6 @@ class Build :
         try:
             taille = plateau.Matrice[pos[1]//30][pos[0]//30] - 6
             if taille >= 1:
-                print(taille)
                 posx = (pos[0] - 15 * (taille - 1)) // 30 * 30 + 15 * taille
                 posy = (pos[1] - 15 * (taille - 1)) // 30 * 30 + 15 * taille
                 pos = (posx,posy)
@@ -139,21 +138,25 @@ class Sentry(Build):
 class Tank(Build):
     """docstring for Sentry"""
     taille = 3
-    zone = 30
+    zone = 50
     dmZone = 50
     
-    def __init__(self, plateau, pos, brange = 300, damage = 10, attenteTir = 3, rangeMini = 60):#dmZone se rajoute à damage
+    def __init__(self, plateau, pos, brange = 300, damage = 20, attenteTir = 3, rangeMini = 60):#dmZone se rajoute à damage
         self.imageTank = plateau.imageTank
         Build.__init__(self, plateau, pos, brange, damage, Tank.taille, attenteTir, plateau.imageTank)
 
     def damageZone(self, plateau, listeMob, listeDyingMob, posTir, listeMobPriorityTarget):
         (posTirx, posTiry) = posTir
-        for mob in listeMob:
+        temp = 0
+
+        while temp < len(listeMob):
+            mob = listeMob[temp]
             distance = sqrt(((mob.posx + 15 - posTirx)**2)+((mob.posy + 15 - posTiry)**2))
             if distance <= self.zone:
-                print(Tank.dmZone)
                 mob.pv -= Tank.dmZone
                 mob.is_it_dying(listeMob, mob, listeDyingMob, listeMobPriorityTarget)
+                temp -= 1
+            temp += 1
 
 
 

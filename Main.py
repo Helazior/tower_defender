@@ -88,7 +88,7 @@ while continuer: #tout ce passe là dedans
 
     #____________________creer les mobs____________________
     #un mob est crée toutes les x secondes (a preciser sur le if)
-    if time() - lastMobAt > .5 :
+    if time() - lastMobAt > .3 :
         lastMobAt = Mob.spawnmobs(plateau, listeMob)
 
     #____________________affiche la range des tours_________ plus les infos

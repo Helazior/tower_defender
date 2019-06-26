@@ -28,7 +28,7 @@ class Build :
 
         for i in range(taille):
             for j in range(taille):
-                plateau.Matrice[posM[1]+j][posM[0]+i] = 9 
+                plateau.Matrice[posM[1]+j][posM[0]+i] = 6 + taille
         
 
     def attack(self, plateau, listeMob, listeDyingMob, listeMobPriorityTarget):
@@ -85,13 +85,20 @@ class Build :
 
     @staticmethod
     def is_build(plateau, pos, dicoTour):
-        posx = (pos[0] - 15) // 30 * 30 + 15*Stalker.taille
-        posy = (pos[1] - 15) // 30 * 30 + 15*Stalker.taille
-        pos = (posx,posy)
         try:
-            dicoTour[pos]
-            return True, pos
-        except:
+            taille = plateau.Matrice[pos[1]//30][pos[0]//30] - 6
+            if taille >= 1:
+                print(taille)
+                posx = (pos[0] - 15 * (taille - 1)) // 30 * 30 + 15 * taille
+                posy = (pos[1] - 15 * (taille - 1)) // 30 * 30 + 15 * taille
+                pos = (posx,posy)
+                try:
+                    dicoTour[pos]
+                    return True, pos
+                except KeyError:
+                    return False, pos
+            return False, pos
+        except IndexError:
             return False, pos
 
     @staticmethod

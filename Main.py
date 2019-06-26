@@ -42,7 +42,7 @@ while continuer: #tout ce passe là dedans
     for event in pygame.event.get(): #il passe toutes les touches en revu pour voir lorsque tu appuies sur une touche
         pygame.event.pump() #c'est pour pas qu'il fasse "le programme ne répond plus", normalement ça marche sans mais pour moi non
             
-        if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte 
+        if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte
             continuer = False
 
        #______________________séléction batiment posé_____________________________________

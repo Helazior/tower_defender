@@ -7,38 +7,30 @@ def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et a
 
     #je charge et convertis les images dans des variables
     fond = pygame.image.load("fond.png").convert()
+    fond2 = pygame.image.load("fond2.png").convert()
     chemin = pygame.image.load("chemin.png").convert()
     start = pygame.image.load("start.png").convert_alpha()
     end = pygame.image.load("end.png").convert_alpha()
-    house1 = pygame.image.load("background/House11.png").convert_alpha()
-    house2 = pygame.image.load("background/House21.png").convert_alpha()
-    house3 = pygame.image.load("background/House31.png").convert_alpha()
-    house4 = pygame.image.load("background/House41.png").convert_alpha()
-    house5 = pygame.image.load("background/House51.png").convert_alpha()
-    house6 = pygame.image.load("background/House61.png").convert_alpha()
-    house7 = pygame.image.load("background/House71.png").convert_alpha()
-    brokenHouse = pygame.image.load("background/BrokenHouse.png").convert_alpha()
 
-    dictHouse = {1: house1, 2: house2, 3: house3, 4: house4, 5: house5, 6: house6, 7: house7}
-
-    fond = pygame.transform.scale(fond, tailleFenetre) #l'image de fond fait la taille de la fenêtre
-    fenetre.blit(fond, (0,0)) #affiche le fond à la position (0,0)
 
     for i in range(nbCasesX):
         for j in range(nbCasesY):
             if Matrice[j][i] != 0:
                 fenetre.blit(chemin, (30*i, 30*j)) #on place un chemin quand c'est pas le fond
+            else:
+                if (i+j)%2:
+                    fenetre.blit(fond, (30*i, 30*j))
+                else:
+                    fenetre.blit(fond2, (30*i, 30*j))
             if Matrice[j][i] == 2:
                 fenetre.blit(start, (30*i, 30*j)) #on place le start
             elif Matrice[j][i] == 3:
                 fenetre.blit(end, (30*i, 30*j))  #on place l'arrivé des mobs
-            elif Matrice[j][i] == 5:
-                fenetre.blit(dictHouse[randint(1,7)], (30*i, 30*j))
 
     pygame.display.flip() #rafraichit l'image !
 
     copy_fond = pygame.display.get_surface().copy() #Copie du fond pour faire bouger les trucs devant
-    return fenetre, copy_fond, brokenHouse
+    return fenetre, copy_fond
 
 
 
@@ -88,4 +80,4 @@ class Plateau: #classe de la map attributs: Matrice, nbCasesX, nbCasesY, tailleF
         margeFenetreGauche = 15
         margeFenetreHaut = 15
         
-        self.fenetre, self.copy_fond, self.brokenHouse = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice)
+        self.fenetre, self.copy_fond = initFenetre(pygame, nbCasesX, nbCasesY,tailleFenetre, Matrice)

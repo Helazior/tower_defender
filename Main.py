@@ -79,7 +79,7 @@ while continuer: #tout ce passe là dedans
         Build.info_build(plateau, posSelect, dicoTour)
 
 
-    clock.tick(60) #en fps, valeur +grande = jeu + rapide
+    clock.tick(15) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 
 pygame.quit()

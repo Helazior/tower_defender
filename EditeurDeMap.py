@@ -36,7 +36,7 @@ chemin = pygame.image.load("chemin.png").convert()
 chemin4 = pygame.image.load("chemin4.png").convert()
 start = pygame.image.load("start.png").convert_alpha()
 end = pygame.image.load("end.png").convert_alpha()
-maison = pygame.image.load("background/House11.png").convert_alpha()
+
 
 def to_show_the_4(plateau, chemin4):
     for y in range(len(plateau.Matrice)):
@@ -83,8 +83,8 @@ def put_a_block(plateau, event, numCase, dictImage):
 
 
 
-dictKey = {256 : 0, 257 : 1, 258 : 2, 259 : 3, 260 : 4, 261 : 5}
-dictImage = {0: fond, 1: chemin, 2: start, 3: end, 4: chemin4, 5: maison}
+dictKey = {256 : 0, 257 : 1, 258 : 2, 259 : 3, 260 : 4}
+dictImage = {0: fond, 1: chemin, 2: start, 3: end, 4: chemin4}
 numCase = 0
 clique = False
 continuer = True

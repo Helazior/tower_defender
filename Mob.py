@@ -194,8 +194,6 @@ class SweetieBelle(Mob):
         
         #on attribue au mob une image et on l'affiche
         self.aliveSkin = pygame.image.load("sweetiebelleAlive.png").convert_alpha()
-        self.dyingSkin = pygame.image.load("sweetiebelleDying.png").convert_alpha()
-        plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) 
 
 
 class RainbowDash(Mob):
@@ -206,8 +204,8 @@ class RainbowDash(Mob):
         self.type = "pegasus"
         
         #on attribue au mob une image et on l'affiche
-        self.aliveSkin = pygame.image.load("RainbowDashAlive.png").convert_alpha()
-        self.dyingSkin = pygame.image.load("RainbowDashDying.png").convert_alpha()
+        self.aliveSkin = pygame.image.load("rainbowdashAlive.png").convert_alpha()
+        self.dyingSkin = pygame.image.load("rainbowdashDying.png").convert_alpha()
         plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) 
 
 

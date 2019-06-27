@@ -40,7 +40,12 @@ class Build :
                 for posInListe in range(len(listeMobAndPriority)) :
                     mob = listeMobAndPriority[posInListe]
                     distance = sqrt(((self.posx - (mob.posx + 15))**2)+((self.posy - (mob.posy + 15))**2))
-                    if  distance <= self.range :
+                    try:
+                        rangeMini = self.rangeMini
+                    except AttributeError: 
+                        rangeMini = 0
+                   
+                    if  distance <= self.range and distance >= rangeMini:
                         self.tempsDernierTir = time()
                         self.tir(plateau, (self.posx, self.posy), (mob.posx + 15, mob.posy + 15)) #animation du tir
                         mob.pv -= self.damage
@@ -103,6 +108,11 @@ class Build :
     def info_build(plateau, pos, dicoTour):
         white = (150,150,150)
         pygame.draw.circle(plateau.fenetre, white, pos, dicoTour[pos].range, 1)
+        try:
+            pygame.draw.circle(plateau.fenetre, white, pos, dicoTour[pos].rangeMini, 1)
+        except AttributeError:
+            pass
+
         #pygame.display.flip()
 
 
@@ -140,8 +150,9 @@ class Tank(Build):
     taille = 3
     zone = 50
     dmZone = 50
+    rangeMini = 100
     
-    def __init__(self, plateau, pos, brange = 300, damage = 20, attenteTir = 3, rangeMini = 60):#dmZone se rajoute à damage
+    def __init__(self, plateau, pos, brange = 300, damage = 20, attenteTir = 3):#dmZone se rajoute à damage
         self.imageTank = plateau.imageTank
         Build.__init__(self, plateau, pos, brange, damage, Tank.taille, attenteTir, plateau.imageTank)
 

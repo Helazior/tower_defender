@@ -194,6 +194,8 @@ class SweetieBelle(Mob):
         
         #on attribue au mob une image et on l'affiche
         self.aliveSkin = pygame.image.load("sweetiebelleAlive.png").convert_alpha()
+        self.dyingSkin = pygame.image.load("sweetiebelleDying.png").convert_alpha()
+        plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) 
 
 
 class RainbowDash(Mob):

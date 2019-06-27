@@ -84,14 +84,16 @@ class Mob:
             plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) #on affiche le mob
         
     def is_it_dying(self, listeMob, mob, listeDyingMob, listeMobPriorityTarget):
-        if not(self in listeDyingMob): #pc'est bien ça, il tire sur des fantomes, avec les dm de zone ça le fait bc
+        try: #erreur car mob n'est pas dans listMob, jsp pourquoi
             if self.pv <= 0:
                 listeMob.remove(mob)
                 try:
                     listeMobPriorityTarget.remove(mob)
-                except:
+                except ValueError:
                     pass
                 listeDyingMob.append(self)
+        except ValueError:
+            pass
 
             
 

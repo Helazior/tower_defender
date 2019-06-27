@@ -76,12 +76,14 @@ class Mob:
             self.posymatrice = int(self.posy / 30)
             #enfin on deplace visuellement le mob
             plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) #on affiche le mob
-            if self in listeMobPriorityTarget:
+            if self in listeMobPriorityTarget: #on affiche le cercle rouge s'il est prioritaire
                 pygame.draw.circle(plateau.fenetre, (125,0,0), (int(self.posx + 15), int(self.posy + 15)), 22, 1)
 
         except ValueError:
             #si il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
             plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) #on affiche le mob
+            if self in listeMobPriorityTarget: #on affiche le cercle rouge s'il est prioritaire
+                pygame.draw.circle(plateau.fenetre, (125,0,0), (int(self.posx + 15), int(self.posy + 15)), 22, 1)
         
     def is_it_dying(self, listeMob, mob, listeDyingMob, listeMobPriorityTarget):
         try: #erreur car mob n'est pas dans listMob, jsp pourquoi

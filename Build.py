@@ -146,7 +146,7 @@ class Sentry(Build):
 
 
 class Tank(Build):
-    """docstring for Sentry"""
+    """docstring for Tank"""
     taille = 3
     zone = 50
     dmZone = 50
@@ -159,17 +159,20 @@ class Tank(Build):
     def damageZone(self, plateau, listeMob, listeDyingMob, posTir, listeMobPriorityTarget):
         (posTirx, posTiry) = posTir
         temp = 0
+        print("1:",len(listeMob))
 
         while temp < len(listeMob):
+            print(temp)
             mob = listeMob[temp]
             distance = sqrt(((mob.posx + 15 - posTirx)**2)+((mob.posy + 15 - posTiry)**2))
             if distance <= self.zone:
                 mob.pv -= Tank.dmZone
                 mob.is_it_dying(listeMob, mob, listeDyingMob, listeMobPriorityTarget)
-                temp -= 1
+                if mob.pv <= 0:
+                    temp -= 1
             temp += 1
 
-
+        print("2:",len(listeMob))
 
     @staticmethod
     def tir(plateau, posTank, posMob):
@@ -184,7 +187,7 @@ class Tank(Build):
 class Explosion:
     def __init__(self, plateau, pos):
         self.image = 1
-        self.pos = (pos[0] - 30, pos[1] - 30)
+        self.pos = (pos[0] - 40, pos[1] - 34)
 
     def affiche(self, plateau):
         plateau.fenetre.blit(plateau.animationExplosion[int(self.image)], self.pos)

@@ -159,10 +159,8 @@ class Tank(Build):
     def damageZone(self, plateau, listeMob, listeDyingMob, posTir, listeMobPriorityTarget):
         (posTirx, posTiry) = posTir
         temp = 0
-        print("1:",len(listeMob))
 
         while temp < len(listeMob):
-            print(temp)
             mob = listeMob[temp]
             distance = sqrt(((mob.posx + 15 - posTirx)**2)+((mob.posy + 15 - posTiry)**2))
             if distance <= self.zone:
@@ -172,7 +170,6 @@ class Tank(Build):
                     temp -= 1
             temp += 1
 
-        print("2:",len(listeMob))
 
     @staticmethod
     def tir(plateau, posTank, posMob):
@@ -180,9 +177,24 @@ class Tank(Build):
         pygame.draw.line(plateau.fenetre, brown, posTank, posMob, 20) #fait un trait rouge de la tour jusqu'au mob
         plateau.explosion.append(Explosion(plateau, posMob))
 
+class forceField:
+    timeAppeared = 8
+    def __init__(self, plateau, pos):
+        self.numMatriceAvant = plateau.Matrice[pos[1]//30][pos[0]//30]
+        plateau.Matrice[pos[1]//30][pos[0]//30] = 0 #bug sur la case 4 car les mobs repartent, donc mettre un autre num qui reste prioritaire, mais il ne peut quand même pas être passé.
+        self.pos = pos
+        self.image = plateau.imageforceField
+        self.timePos = time()
+
+    def affiche(self, plateau):
+        if time() - self.timePos <= self.timeAppeared:
+            plateau.fenetre.blit(self.image, (self.pos[0] - 23, self.pos[1] - 20))
+        else:
+            plateau.Matrice[self.pos[1]//30][self.pos[0]//30] = self.numMatriceAvant
+            plateau.forcefield.remove(self)
 
 
-
+		
 
 class Explosion:
     def __init__(self, plateau, pos):

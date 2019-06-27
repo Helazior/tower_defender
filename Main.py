@@ -73,6 +73,10 @@ while continuer: #tout ce passe là dedans
                 Build.set_up(plateau, event.pos, dicoTour, tourSelect) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
                 tourSelect = None
 
+        elif event.type == pygame.KEYDOWN:
+            if event.key == K_f and plateau.Matrice[posSouris[1]//30][posSouris[0]//30]:
+                plateau.forcefield.append(forceField(plateau, posSouris))
+
 
     #____________________bouger les mobs____________________
     #on affiche le fond de base pour effacer les mobs
@@ -102,6 +106,9 @@ while continuer: #tout ce passe là dedans
     for explosion in plateau.explosion:
         explosion.affiche(plateau)
 
+    #____________________affiche les force fields___________
+    for forcef in plateau.forcefield:
+        forcef.affiche(plateau)
         
     clock.tick(60) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image

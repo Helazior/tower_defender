@@ -226,11 +226,13 @@ def sentry_min_range(dicoTour, posSouris):
             if distance <= sentry.range and sentry.mana >= forceField.cout:
                 listeSentry.append(sentry)
                 listeDistanceSentry.append(distance)
-                numSentrySelect = listeDistanceSentry.index(min(listeDistanceSentry))
-                sentrySelect = listeSentry[numSentrySelect]
-                sentry.mana -= 50
-                #animation ? et changer la barre mana
-                return True
+
+    if listeSentry != []:
+        numSentrySelect = listeDistanceSentry.index(min(listeDistanceSentry))
+        sentrySelect = listeSentry[numSentrySelect]
+        sentrySelect.mana -= 50
+
+        return True
 
     return False                                                                                                    
 		

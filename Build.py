@@ -136,8 +136,14 @@ class Sentry(Build):
     """docstring for Sentry"""
     name = "sentry"
     taille = 1
-    
-    def __init__(self, plateau, pos, brange = 100, damage = 3, attenteTir = 0.4):
+    maxMana = 200
+    timeRechargeMana = 1
+   
+
+    def __init__(self, plateau, pos, brange = 100, damage = 3, attenteTir = 0.4, mana = 50):
+        self.mana = mana
+        self.lastRechargeMana = time()
+
         self.imageSentry = plateau.imageSentry
         Build.__init__(self, plateau, pos, brange, damage, Sentry.taille, attenteTir, plateau.imageSentry)
 
@@ -206,12 +212,12 @@ def sentry_min_range(dicoTour, posSouris):
         
         if sentry.name == "sentry":
             distance = sqrt((pos[0] - sentry.posx)**2 + (pos[1] - sentry.posy)**2)
-            if distance <= sentry.range:
+            if distance <= sentry.range and sentry.mana >= 50:
                 listeSentry.append(sentry)
                 listeDistanceSentry.append(distance)
                 numSentrySelect = listeDistanceSentry.index(min(listeDistanceSentry))
                 sentrySelect = listeSentry[numSentrySelect]
-                #retirer la mana
+                sentry.mana -= 50
                 #animation ? et changer la barre mana
                 return True
 

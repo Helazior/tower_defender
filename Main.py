@@ -83,6 +83,15 @@ while continuer: #tout ce passe là dedans
             except IndexError:
                 pass
 
+    #____________________recharge la mana___________________
+    for tour in dicoTour.values():
+        try:
+            if time() - tour.lastRechargeMana >= tour.timeRechargeMana and tour.mana < tour.maxMana:
+                tour.mana += 10
+                tour.lastRechargeMana = time()
+                print("recharge mana")
+        except AttributeError:
+            pass
 
     #____________________bouger les mobs____________________
     #on affiche le fond de base pour effacer les mobs

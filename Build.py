@@ -119,6 +119,7 @@ class Build :
 
 class Stalker(Build):
     """docstring for Stalker"""
+    name = "stalker"
     taille = 2
 
     def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.7):
@@ -133,6 +134,7 @@ class Stalker(Build):
 
 class Sentry(Build):
     """docstring for Sentry"""
+    name = "sentry"
     taille = 1
     
     def __init__(self, plateau, pos, brange = 100, damage = 3, attenteTir = 0.4):
@@ -147,6 +149,7 @@ class Sentry(Build):
 
 class Tank(Build):
     """docstring for Tank"""
+    name = "tank"
     taille = 3
     zone = 50
     dmZone = 50
@@ -194,7 +197,25 @@ class forceField:
             plateau.Matrice[self.pos[1]//30][self.pos[0]//30] = self.numMatriceAvant
             plateau.forcefield.remove(self)
 
+    
+def sentry_min_range(dicoTour, posSouris):
+    pos = (posSouris[0] // 30 * 30 + 15, posSouris[1] // 30 * 30 + 15) 
+    listeSentry = []
+    listeDistanceSentry = []
+    for sentry in dicoTour.values():
+        
+        if sentry.name == "sentry":
+            distance = sqrt((pos[0] - sentry.posx)**2 + (pos[1] - sentry.posy)**2)
+            if distance <= sentry.range:
+                listeSentry.append(sentry)
+                listeDistanceSentry.append(distance)
+                numSentrySelect = listeDistanceSentry.index(min(listeDistanceSentry))
+                sentrySelect = listeSentry[numSentrySelect]
+                #retirer la mana
+                #animation ? et changer la barre mana
+                return True
 
+    return False                                                                                                    
 		
 
 class Explosion:

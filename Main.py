@@ -76,8 +76,10 @@ while continuer: #tout ce passe là dedans
         elif event.type == pygame.KEYDOWN:
             try:
                 numMatrice = plateau.Matrice[posSouris[1]//30][posSouris[0]//30]
-                if event.key == K_f and numMatrice == 1 or numMatrice == 4:
-                    plateau.forcefield.append(forceField(plateau, posSouris))
+                if event.key == K_f and (numMatrice == 1 or numMatrice == 4):
+                    sentryInRange = sentry_min_range(dicoTour, posSouris)
+                    if sentryInRange:
+                        plateau.forcefield.append(forceField(plateau, posSouris))
             except IndexError:
                 pass
 

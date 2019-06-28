@@ -57,7 +57,7 @@ class Mob:
                         #crée un dictionnaire contenant toute les directions possibles
                         directiondispo[i] = direction[i]
                     elif nextCase == 5:
-                        directiondispo[i] = []
+                        directiondispo = []
                         break
                     else:
                         pass

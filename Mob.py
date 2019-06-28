@@ -12,6 +12,7 @@ class Mob:
     nbrMobFini = 0
     
     def __init__(self, plateau, speed = 1, pv = 100, wasat = 5, dying = 10):
+        self.pvMax = pv
         #on set la position initiale du mob
         for posy in range(len(plateau.Matrice)):
             for posx in range(len(plateau.Matrice[posy])):
@@ -109,6 +110,12 @@ class Mob:
         else:
             return "mob is dead"
         self.dying -= 1
+
+    def show_pv(self, plateau):
+        proportionVie = self.pv / self.pvMax
+        couleur = ((1 - proportionVie) * 255, 255 * proportionVie, 0)
+
+        pygame.draw.line(plateau.fenetre, couleur, (self.posx, self.posy - 5 ), (self.posx + 30 * proportionVie, self.posy - 5), 5)
 
 
     #_______________________Fonctions statiques_________________________

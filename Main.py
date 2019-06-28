@@ -130,6 +130,12 @@ while continuer: #tout ce passe là dedans
         except AttributeError:
             pass
     
+    #___________________affiche les pv mobs_________________
+    for mob in listeMob:
+        if mob.pv < mob.pvMax: #s'il n'a pas tous ses pv
+            mob.show_pv(plateau)
+
+
     clock.tick(60) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 

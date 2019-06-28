@@ -69,7 +69,7 @@ class Build :
         (x,y) = pos
         if x > 15 and y > 15:
             taille = tour.taille
-            pos = (x - 15*(taille - 1) , y - 15*(taille - 1)) #pour que le clique soit centré par rapport a la tour qu'il fait apparaitre
+            pos = (x - 15*(taille - 1) , y - 15*(taille - 1)) #pour que le clique soit centrés par rapport a la tour qu'il fait apparaitre
             posMatrice = convertPixelMatrice(pos)
             freeSpace = True
             try:
@@ -153,7 +153,7 @@ class Sentry(Build):
         else:
             couleur = (255, 0, 0)
         
-        pygame.draw.line(plateau.fenetre, couleur, (self.posx - 15, self.posy - 15), (self.posx - 15 + 30 * self.mana / self.maxMana, self.posy - 15), 5)
+        pygame.draw.line(plateau.fenetre, couleur, (self.posx - 15, self.posy - 20), (self.posx - 15 + 30 * self.mana / self.maxMana, self.posy - 20), 6)
 
 
 

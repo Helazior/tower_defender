@@ -122,7 +122,7 @@ class Stalker(Build):
     name = "stalker"
     taille = 2
 
-    def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.7):
+    def __init__(self, plateau, pos, brange = 200, damage = 10, attenteTir = 0.8):
         self.imageStalker = plateau.imageStalker
         Build.__init__(self, plateau, pos, brange, damage, Stalker.taille, attenteTir, plateau.imageStalker)
 
@@ -137,19 +137,29 @@ class Sentry(Build):
     name = "sentry"
     taille = 1
     maxMana = 200
-    timeRechargeMana = 1
+    timeRechargeMana = .1
    
 
-    def __init__(self, plateau, pos, brange = 100, damage = 3, attenteTir = 0.4, mana = 50):
+    def __init__(self, plateau, pos, brange = 100, damage = 2, attenteTir = 0.3, mana = 50):
         self.mana = mana
         self.lastRechargeMana = time()
 
         self.imageSentry = plateau.imageSentry
         Build.__init__(self, plateau, pos, brange, damage, Sentry.taille, attenteTir, plateau.imageSentry)
 
+    def show_mana(self, plateau):
+        if self.mana >= forceField.cout:
+            couleur = (150, 60, 255)
+        else:
+            couleur = (255, 0, 0)
+        
+        pygame.draw.line(plateau.fenetre, couleur, (self.posx - 15, self.posy - 15), (self.posx - 15 + 30 * self.mana / self.maxMana, self.posy - 15), 5)
+
+
+
     @staticmethod
     def tir(plateau, posSentry, posMob):
-        blue = (0,255,100)
+        blue = (0,255,255)
         pygame.draw.line(plateau.fenetre, blue, posSentry, posMob, 3) #fait un trait rouge de la tour jusqu'au mob
 
 
@@ -189,6 +199,7 @@ class Tank(Build):
 
 class forceField:
     timeAppeared = 8
+    cout = 50
     def __init__(self, plateau, pos):
         self.numMatriceAvant = plateau.Matrice[pos[1]//30][pos[0]//30]
         plateau.Matrice[pos[1]//30][pos[0]//30] = 5*(self.numMatriceAvant == 4)
@@ -212,7 +223,7 @@ def sentry_min_range(dicoTour, posSouris):
         
         if sentry.name == "sentry":
             distance = sqrt((pos[0] - sentry.posx)**2 + (pos[1] - sentry.posy)**2)
-            if distance <= sentry.range and sentry.mana >= 50:
+            if distance <= sentry.range and sentry.mana >= forceField.cout:
                 listeSentry.append(sentry)
                 listeDistanceSentry.append(distance)
                 numSentrySelect = listeDistanceSentry.index(min(listeDistanceSentry))

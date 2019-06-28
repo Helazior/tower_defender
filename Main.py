@@ -87,9 +87,8 @@ while continuer: #tout ce passe là dedans
     for tour in dicoTour.values():
         try:
             if time() - tour.lastRechargeMana >= tour.timeRechargeMana and tour.mana < tour.maxMana:
-                tour.mana += 10
+                tour.mana += 1
                 tour.lastRechargeMana = time()
-                print("recharge mana")
         except AttributeError:
             pass
 
@@ -124,7 +123,13 @@ while continuer: #tout ce passe là dedans
     #____________________affiche les force fields___________
     for forcef in plateau.forcefield:
         forcef.affiche(plateau)
-        
+    #____________________affiche les barres de mana_________
+    for tour in dicoTour.values():
+        try:
+            tour.show_mana(plateau)
+        except AttributeError:
+            pass
+    
     clock.tick(60) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 

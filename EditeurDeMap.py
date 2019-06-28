@@ -58,7 +58,7 @@ def save(matrice, fileName):
                 fichier.write("\n")
 
 
-        print(f"{fileName} a bien été sauvegardé !")
+        print(f"{fileName} a bien été enregistré !")
     except:
         print("ERREUR d'enregistrement...")
 
@@ -83,7 +83,7 @@ def put_a_block(plateau, event, numCase, dictImage):
 
 
 
-dictKey = {256 : 0, 257 : 1, 258 : 2, 259 : 3, 260 : 4}
+dictKey = {256 : 0, 257 : 1, 258 : 2, 259 : 3, 260 : 4, 224 : 0, 38 : 1, 233 : 2, 34 : 3, 39 : 4}
 dictImage = {0: fond, 1: chemin, 2: start, 3: end, 4: chemin4}
 numCase = 0
 clique = False
@@ -97,7 +97,7 @@ while continuer: #tout ce passe là dedans
     for event in pygame.event.get(): #il passe toutes les touches en revu pour voir lorsque tu appuies sur une touche
         pygame.event.pump() #c'est pour pas qu'il fasse "le programme ne répond plus", normalement ça marche sans mais pour moi non
             
-        if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte
+        if event.type == pygame.QUIT: #quand t'appuies sur la croix ça quitte et enregistre
             save(plateau.Matrice, fileName)
             continuer = False
 
@@ -114,11 +114,12 @@ while continuer: #tout ce passe là dedans
                 numCase = dictKey[event.key]
                 print(numCase)
             except:
-                if event.key == K_s: #appuyer sur 's' pour sauvegarder la map
+                if event.key == K_s: #appuyer sur 's' pour enregistrer la map
                     save(plateau.Matrice, fileName)
-                elif event.key == K_u:
+                elif event.key == K_u: #'u' revient à la dernière sauvegarde
                     plateau = Plateau(pygame, fileName)
                     to_show_the_4(plateau, chemin4)
+
 
 
     clock.tick(60) #en fps, valeur +grande = jeu + rapide

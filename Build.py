@@ -177,6 +177,7 @@ class Tank(Build):
         pygame.draw.line(plateau.fenetre, brown, posTank, posMob, 20) #fait un trait rouge de la tour jusqu'au mob
         plateau.explosion.append(Explosion(plateau, posMob))
 
+
 class forceField:
     timeAppeared = 8
     def __init__(self, plateau, pos):
@@ -188,7 +189,7 @@ class forceField:
 
     def affiche(self, plateau):
         if time() - self.timePos <= self.timeAppeared:
-            plateau.fenetre.blit(self.image, (self.pos[0] - 23, self.pos[1] - 20))
+            plateau.fenetre.blit(self.image, (self.pos[0]//30*30 - 8,self.pos[1] //30*30- 5))
         else:
             plateau.Matrice[self.pos[1]//30][self.pos[0]//30] = self.numMatriceAvant
             plateau.forcefield.remove(self)

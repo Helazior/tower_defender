@@ -182,7 +182,7 @@ class forceField:
     timeAppeared = 8
     def __init__(self, plateau, pos):
         self.numMatriceAvant = plateau.Matrice[pos[1]//30][pos[0]//30]
-        plateau.Matrice[pos[1]//30][pos[0]//30] = 0 #bug sur la case 4 car les mobs repartent, donc mettre un autre num qui reste prioritaire, mais il ne peut quand même pas être passé.
+        plateau.Matrice[pos[1]//30][pos[0]//30] = 5*(self.numMatriceAvant == 4)
         self.pos = pos
         self.image = plateau.imageforceField
         self.timePos = time()

@@ -74,8 +74,12 @@ while continuer: #tout ce passe là dedans
                 tourSelect = None
 
         elif event.type == pygame.KEYDOWN:
-            if event.key == K_f and plateau.Matrice[posSouris[1]//30][posSouris[0]//30]:
-                plateau.forcefield.append(forceField(plateau, posSouris))
+            try:
+                numMatrice = plateau.Matrice[posSouris[1]//30][posSouris[0]//30]
+                if event.key == K_f and numMatrice == 1 or numMatrice == 4:
+                    plateau.forcefield.append(forceField(plateau, posSouris))
+            except IndexError:
+                pass
 
 
     #____________________bouger les mobs____________________

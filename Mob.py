@@ -40,21 +40,25 @@ class Mob:
                 for i in range(4):
                     #on regarde tout autour du mob
                     (y,x) = direction[i]
+                    nextCase = plateau.Matrice[self.posymatrice + y][self.posxmatrice + x] 
                     if i == self.wasat :
                         #le mob ne peut pas reculer
                         pass
-                    elif plateau.Matrice[self.posymatrice + y][self.posxmatrice + x] == 3:
+                    elif nextCase == 3:
                         #force le mob a finir si la case de fin est a coté
                         directiondispo = {i:direction[i]}
                         self.fini = True
                         break
-                    elif plateau.Matrice[self.posymatrice + y][self.posxmatrice + x] == 4:
+                    elif nextCase == 4:
                         #force le mob a aller dans la bonne direction
                         directiondispo = {i:direction[i]} 
                         break
-                    elif plateau.Matrice[self.posymatrice + y][self.posxmatrice + x] == 1:
+                    elif nextCase == 1:
                         #crée un dictionnaire contenant toute les directions possibles
                         directiondispo[i] = direction[i]
+                    elif nextCase == 5:
+                        directiondispo[i] = []
+                        break
                     else:
                         pass
             except IndexError:

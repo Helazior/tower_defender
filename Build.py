@@ -137,7 +137,7 @@ class Sentry(Build):
     name = "sentry"
     taille = 1
     maxMana = 200
-    timeRechargeMana = .1
+    timeRechargeMana = .3
    
 
     def __init__(self, plateau, pos, brange = 100, damage = 2, attenteTir = 0.3, mana = 50):

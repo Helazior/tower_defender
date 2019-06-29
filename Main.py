@@ -30,8 +30,9 @@ lastMobAt = 0
 dicoTour = dict()
 dicoToursMenu = {1 : Stalker, 2 : Sentry, 3 : Tank} #dictionnaire des tours par leur position pour cliquer dessus
 dicoImagesMenu = {Stalker : plateau.imageStalker, Sentry : plateau.imageSentry, Tank : plateau.imageTank}
-tourSelect = None
+tourSelectMenu = None
 selectBuild = False
+selectForceField = False
 
 continuer = True
 
@@ -48,7 +49,7 @@ while continuer: #tout ce passe là dedans
        #______________________séléction batiment posé_____________________________________
         elif event.type == pygame.MOUSEMOTION:
             posSouris = event.pos
-            if tourSelect == None:
+            if tourSelectMenu == None:
                 selectBuild, posSelect = Build.is_build(plateau, posSouris, dicoTour)
                 
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -57,25 +58,44 @@ while continuer: #tout ce passe là dedans
             (posx, posy) = (event.pos[0], event.pos[1])
             if posx >= 1200:
                 try:
-                    tourSelect = dicoToursMenu[posy // 100]
-                    imageSelect = dicoImagesMenu[tourSelect]
+                    tourSelectMenu = dicoToursMenu[posy // 100]
+                    imageSelect = dicoImagesMenu[tourSelectMenu]
                 except:
                     pass
             else:
-                tourSelect = None
+                tourSelectMenu = None
+                
+                #_________________Take force field in a Sentry__________________________
+                if selectBuild and dicoTour[posSelect].name == "sentry" and dicoTour[posSelect].mana >= 50:
+                    selectForceField = True
+                    sentryUseForceField = dicoTour[posSelect]
+                    posSentryUseForceField = posSelect
+                    imageSelect = plateau.imageforceField
+                    
 
-            #_________________séléctionner un mob pour le mettre en priorité______________
-            Mob.prioritizemob(plateau, listeMob, listeMobPriorityTarget, event.pos)
+                #_________________séléctionner un mob pour le mettre en priorité______________
+                Mob.prioritizemob(plateau, listeMob, listeMobPriorityTarget, event.pos)
 
         elif event.type == pygame.MOUSEBUTTONUP:
-            if tourSelect != None:
+            if tourSelectMenu != None:
                 #_________________poser une tour__________________________________________
-                Build.set_up(plateau, event.pos, dicoTour, tourSelect) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
-                tourSelect = None
+                Build.set_up(plateau, event.pos, dicoTour, tourSelectMenu) #pose un bâtiment s'il y a de la place, taille dépendra du bâtiment séléctionné
+                tourSelectMenu = None
+
+            elif selectForceField:
+                selectForceField = False
+                numMatrice = plateau.Matrice[posSouris[1]//30][posSouris[0]//30]
+                #_________________put force field__________________________________
+                if numMatrice == 1 or numMatrice == 4: 
+                    sentryInRange = sentry_min_range({posSentryUseForceField : sentryUseForceField}, posSouris)
+                    if sentryInRange:
+                        plateau.forcefield.append(forceField(plateau,posSouris))
+
 
         elif event.type == pygame.KEYDOWN:
             try:
                 numMatrice = plateau.Matrice[posSouris[1]//30][posSouris[0]//30]
+                #_________________put force field____________________________________
                 if event.key == K_f and (numMatrice == 1 or numMatrice == 4):
                     sentryInRange = sentry_min_range(dicoTour, posSouris)
                     if sentryInRange:
@@ -112,9 +132,11 @@ while continuer: #tout ce passe là dedans
     #____________________affiche la range des tours_________ plus les infos
     if selectBuild:
         Build.info_build(plateau, posSelect, dicoTour)
-    #____________________affiche la tour séléctionné________ 
-    if tourSelect != None:
-        plateau.fenetre.blit(imageSelect, (posSouris[0] - 15 * tourSelect.taille, posSouris[1] - 15 * tourSelect.taille))
+    #____________________affiche élément séléctionné________ 
+    if tourSelectMenu != None:
+        plateau.fenetre.blit(imageSelect, (posSouris[0] - 15 * tourSelectMenu.taille, posSouris[1] - 15 * tourSelectMenu.taille))
+    if selectForceField:
+        plateau.fenetre.blit(imageSelect, (posSouris[0] - 23, posSouris[1] - 15))
 
     #____________________affiche les explosions_____________
     for explosion in plateau.explosion:

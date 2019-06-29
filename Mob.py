@@ -11,7 +11,8 @@ class Mob:
 
     nbrMobFini = 0
     
-    def __init__(self, plateau, speed = 1, pv = 100, wasat = 5, dying = 10):
+    def __init__(self, plateau, speed = 1, wasat = 5, dying = 10):
+        pv = plateau.lvl.pvMob[plateau.lvl.vague]
         self.pvMax = pv
         #on set la position initiale du mob
         for posy in range(len(plateau.Matrice)):
@@ -98,9 +99,11 @@ class Mob:
                 except ValueError:
                     pass
                 listeMob.remove(mob)
+
                 listeDyingMob.append(self)
         except ValueError:
             print("erreur non résolue...")#normalement on ne verra jamais ce message... Inchallah
+            #edit: je l'ai vu une fois car le tank a tirer sur un mob au moment où il terminait. à corriger. Mais ça reste extrèmement rare.
 
             
 
@@ -121,13 +124,29 @@ class Mob:
     #_______________________Fonctions statiques_________________________
     @staticmethod
     def spawnmobs(plateau, listeMob):
-        randomponey = randint(0,2)
+        mob = plateau.lvl.ordreMobs[plateau.lvl.vague] 
+        if mob == "Scootaloo":
+            listeMob.append(Scootaloo(plateau))
+        elif mob == "AppleBloom":
+            listeMob.append(AppleBloom(plateau))
+        elif mob == "RainbowDash":
+            listeMob.append(RainbowDash(plateau))
+        else:
+            print("erreur mauvais nom mob")
+
+        plateau.lvl.nbMobs[plateau.lvl.vague] -= 1
+        if plateau.lvl.nbMobs[plateau.lvl.vague] <= 0:
+            plateau.lvl.tempsFinVague = time()
+
+
+        """randomponey = randint(0,2)
         if randomponey == 0:
             listeMob.append(Scootaloo(plateau))
         elif randomponey == 1:
             listeMob.append(AppleBloom(plateau))
         else:
             listeMob.append(RainbowDash(plateau))
+        """
         return time()
 
     @staticmethod
@@ -178,7 +197,7 @@ class Mob:
 class Scootaloo(Mob):
 
     def __init__(self, plateau):
-        Mob.__init__(self, plateau, speed = 8, pv = 25)
+        Mob.__init__(self, plateau, speed = 8)
 
         self.type = "earth"
         
@@ -191,7 +210,7 @@ class Scootaloo(Mob):
 class AppleBloom(Mob):
 
     def __init__(self, plateau):
-        Mob.__init__(self, plateau, speed = 16, pv = 75)
+        Mob.__init__(self, plateau, speed = 16)
 
         self.type = "earth"
         
@@ -203,7 +222,7 @@ class AppleBloom(Mob):
         
 class SweetieBelle(Mob):
     def __init__(self, plateau):
-        Mob.__init__(self, plateau, speed = 12, pv = 50)
+        Mob.__init__(self, plateau, speed = 12)
 
         self.type = "flying" #magic?
         
@@ -216,7 +235,7 @@ class SweetieBelle(Mob):
 class RainbowDash(Mob):
 
     def __init__(self, plateau):
-        Mob.__init__(self, plateau, speed = 2, pv = 1)
+        Mob.__init__(self, plateau, speed = 2)
 
         self.type = "earth"
         

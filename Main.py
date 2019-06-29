@@ -4,6 +4,7 @@ from time import time
 import sys, os
 import pygame
 
+from initialise_lvl import * 
 from Mob import *
 from Build import *
 from Plateau import * #sous-programme comprennant toutes les fonctions et la classe concernant la map
@@ -20,7 +21,7 @@ clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 #__________________________________________________création map:_____________________________________________________
 
 #setup pour le plateau
-plateau = Plateau(pygame, "map.txt")
+plateau = Plateau(pygame)
 #setup pour la creation de mob
 listeMob = list()
 listeMobPriorityTarget = list()
@@ -103,6 +104,25 @@ while continuer: #tout ce passe là dedans
             except IndexError:
                 pass
 
+
+    #____________________vague suivante_____________________
+    if plateau.lvl.nbMobs[plateau.lvl.vague] <= 0: 
+        if time() - plateau.lvl.tempsFinVague >= plateau.lvl.tempsAvantVague[plateau.lvl.vague]:
+            plateau.lvl.vague += 1
+            print("vague" , plateau.lvl.vague + 1)
+            if plateau.lvl.vague > len(plateau.lvl.ordreMobs):
+                print("Gagné !")
+                continuer = False
+        #_______________gagné !_______________
+        if plateau.lvl.vague + 1 >= len(plateau.lvl.ordreMobs) and listeMob == []:
+                print("Gagné !")
+                continuer = False
+                sleep(5)
+
+
+
+
+
     #____________________recharge la mana___________________
     for tour in dicoTour.values():
         try:
@@ -126,7 +146,7 @@ while continuer: #tout ce passe là dedans
 
     #____________________creer les mobs____________________
     #un mob est crée toutes les x secondes (a preciser sur le if)
-    if time() - lastMobAt > .3 :
+    if time() - lastMobAt > plateau.lvl.tempsEntreMobs[plateau.lvl.vague] and plateau.lvl.nbMobs[plateau.lvl.vague] > 0:
         lastMobAt = Mob.spawnmobs(plateau, listeMob)
 
     #____________________affiche la range des tours_________ plus les infos
@@ -158,7 +178,7 @@ while continuer: #tout ce passe là dedans
             mob.show_pv(plateau)
 
 
-    clock.tick(60) #en fps, valeur +grande = jeu + rapide
+    clock.tick(45) #en fps, valeur +grande = jeu + rapide
     pygame.display.flip() #rafraichit l'image
 
 pygame.quit()

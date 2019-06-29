@@ -1,5 +1,7 @@
 from random import randint
 
+from initialise_lvl import *
+
 def initFenetre(pygame, nbCasesX, nbCasesY, tailleFenetre, Matrice): #crée et affiche la fenêtre
     pygame.display.set_caption("Tower Defender !")
 
@@ -90,7 +92,10 @@ def creationMatrice(tailleFenetre, nbCasesX, nbCasesY, fileName):
 
 class Plateau: #classe de la map attributs: Matrice, nbCasesX, nbCasesY, tailleFenetre, fenetre
 
-    def __init__(self, pygame, fileName):
+    def __init__(self, pygame):
+        self.lvl = lvl_1()
+        fileName = self.lvl.maptxt
+
         nbCasesX = 40
         nbCasesY = 20
         tailleFenetre = (nbCasesX*30 + 80,nbCasesY*30 + 80)

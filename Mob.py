@@ -95,7 +95,8 @@ class Mob:
         try:
             if self.pv <= 0:
                 try: 
-                    listeMobPriorityTarget.remove(mob)              
+                    listeMobPriorityTarget.remove(mob)
+                    listeMobPriorityTarget.remove(mob) #pour enlever le bug, mais ne devrait pas exister
                 except ValueError:
                     pass
                 listeMob.remove(mob)

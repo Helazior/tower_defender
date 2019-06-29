@@ -50,12 +50,13 @@ class Build :
                         self.tir(plateau, (self.posx, self.posy), (mob.posx + 15, mob.posy + 15)) #animation du tir
                         mob.pv -= self.damage
                         #print(f"Mob {posInListe} touché, lui reste {mob.pv} pv")
+                        mob.is_it_dying(listeMob, mob, listeDyingMob, listeMobPriorityTarget)       
+
                         try:
                             self.damageZone(plateau, listeMob, listeDyingMob, (mob.posx + 15, mob.posy + 15), listeMobPriorityTarget)
                         except AttributeError:
                             pass
 
-                        mob.is_it_dying(listeMob, mob, listeDyingMob, listeMobPriorityTarget)                           
                         break
 
 

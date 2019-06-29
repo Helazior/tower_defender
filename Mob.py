@@ -91,16 +91,16 @@ class Mob:
                 pygame.draw.circle(plateau.fenetre, (125,0,0), (int(self.posx + 15), int(self.posy + 15)), 22, 1)
         
     def is_it_dying(self, listeMob, mob, listeDyingMob, listeMobPriorityTarget):
-        try: #erreur car mob n'est pas dans listMob, jsp pourquoi
+        try:
             if self.pv <= 0:
-                listeMob.remove(mob)
-                try:
-                    listeMobPriorityTarget.remove(mob)
+                try: 
+                    listeMobPriorityTarget.remove(mob)              
                 except ValueError:
                     pass
+                listeMob.remove(mob)
                 listeDyingMob.append(self)
         except ValueError:
-            pass
+            print("erreur non résolue...")#normalement on ne verra jamais ce message... Inchallah
 
             
 
@@ -205,7 +205,7 @@ class SweetieBelle(Mob):
     def __init__(self, plateau):
         Mob.__init__(self, plateau, speed = 12, pv = 50)
 
-        self.type = "earth" #magic?
+        self.type = "flying" #magic?
         
         #on attribue au mob une image et on l'affiche
         self.aliveSkin = pygame.image.load("sweetiebelleAlive.png").convert_alpha()
@@ -218,7 +218,7 @@ class RainbowDash(Mob):
     def __init__(self, plateau):
         Mob.__init__(self, plateau, speed = 2, pv = 1)
 
-        self.type = "pegasus"
+        self.type = "earth"
         
         #on attribue au mob une image et on l'affiche
         self.aliveSkin = pygame.image.load("rainbowdashAlive.png").convert_alpha()

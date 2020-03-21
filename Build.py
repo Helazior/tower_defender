@@ -14,7 +14,7 @@ class Build :
         #affiche la tour
         posM = convertPixelMatrice(pos)
         
-        plateau.fenetre.blit(plateau.copy_fond, (0, 0))
+        plateau.fenetre.blit(plateau.copy_fond, (0, 0)) 
         plateau.fenetre.blit(bulding, (posM[0]*30, posM[1]*30))
 
         

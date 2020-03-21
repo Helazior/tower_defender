@@ -14,7 +14,10 @@ pygame.init()
 pathname = os.path.dirname(sys.argv[0])     #chemin du programme
 
 os.chdir (os.path.abspath(pathname))        #c'est pour que le repertoire courant soit au niveau du programme
-os.chdir ("ressources")                     #c'est pour que le repertoire courant soit dans "ressources"
+try:
+    os.chdir ("ressources")                     #c'est pour que le repertoire courant soit dans "ressources"
+except:
+    pass
 
 clock = pygame.time.Clock() #initialise une horloge pour gerer le temps
 
@@ -85,13 +88,16 @@ while continuer: #tout ce passe là dedans
 
             elif selectForceField:
                 selectForceField = False
-                numMatrice = plateau.Matrice[posSouris[1]//30][posSouris[0]//30]
-                #_________________put force field__________________________________
-                if numMatrice == 1 or numMatrice == 4: 
-                    sentryInRange = sentry_min_range({posSentryUseForceField : sentryUseForceField}, posSouris)
-                    if sentryInRange:
-                        plateau.forcefield.append(forceField(plateau,posSouris))
+                try:
+                    numMatrice = plateau.Matrice[posSouris[1]//30][posSouris[0]//30]
+                    #_________________put force field__________________________________
+                    if numMatrice == 1 or numMatrice == 4: 
+                        sentryInRange = sentry_min_range({posSentryUseForceField : sentryUseForceField}, posSouris)
+                        if sentryInRange:
+                            plateau.forcefield.append(forceField(plateau,posSouris))
 
+                except IndexError:
+                    pass
 
         elif event.type == pygame.KEYDOWN:
             try:
@@ -117,9 +123,7 @@ while continuer: #tout ce passe là dedans
         if plateau.lvl.vague + 1 >= len(plateau.lvl.ordreMobs) and listeMob == []:
                 print("Gagné !")
                 continuer = False
-                sleep(5)
-
-
+                sleep(2)
 
 
 

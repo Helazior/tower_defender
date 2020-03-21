@@ -29,7 +29,7 @@ clock = pygame.time.Clock() 				#initialise une horloge pour gerer le temps
 
 #setup pour le plateau
 fileName = "map.txt"   #mettre un fichier txt existant qui peut-être vide
-plateau = Plateau(pygame, fileName)
+plateau = Plateau(pygame)
 #je charge et convertis les images dans des variables
 fond = pygame.image.load("fond.png").convert()
 chemin = pygame.image.load("chemin.png").convert()
@@ -58,7 +58,7 @@ def save(matrice, fileName):
                 fichier.write("\n")
 
 
-        print(f"{fileName} a bien été enregistré !")
+        print(f"{fileName} a bien été enregistrée !")
     except:
         print("ERREUR d'enregistrement...")
 
@@ -117,7 +117,7 @@ while continuer: #tout ce passe là dedans
                 if event.key == K_s: #appuyer sur 's' pour enregistrer la map
                     save(plateau.Matrice, fileName)
                 elif event.key == K_u: #'u' revient à la dernière sauvegarde
-                    plateau = Plateau(pygame, fileName)
+                    plateau = Plateau(pygame)
                     to_show_the_4(plateau, chemin4)
 
 

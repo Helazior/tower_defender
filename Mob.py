@@ -64,7 +64,7 @@ class Mob:
                     else:
                         pass
             except IndexError:
-                #si il y a un IndexError, c'est que le mob regarde le coté de la map, donc pas une direction valable
+                #s'il y a un IndexError, c'est que le mob regarde le coté de la map, donc pas une direction valable
                 pass
         else:
             directiondispo = {(self.wasat + 2) % 4 : direction[(self.wasat + 2) % 4]}
@@ -86,7 +86,7 @@ class Mob:
                 pygame.draw.circle(plateau.fenetre, (125,0,0), (int(self.posx + 15), int(self.posy + 15)), 22, 1)
 
         except ValueError:
-            #si il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
+            #s'il y a une ValueError, c'est qu'il n'y a pas de directions possibles, et donc le randint bug
             plateau.fenetre.blit(self.aliveSkin, (self.posx, self.posy)) #on affiche le mob
             if self in listeMobPriorityTarget: #on affiche le cercle rouge s'il est prioritaire
                 pygame.draw.circle(plateau.fenetre, (125,0,0), (int(self.posx + 15), int(self.posy + 15)), 22, 1)
@@ -104,7 +104,7 @@ class Mob:
                 listeDyingMob.append(self)
         except ValueError:
             print("erreur non résolue...")#normalement on ne verra jamais ce message... Inchallah
-            #edit: je l'ai vu une fois car le tank a tirer sur un mob au moment où il terminait. à corriger. Mais ça reste extrèmement rare.
+            #edit: je l'ai vu une fois car le tank a tiré sur un mob au moment où il terminait. à corriger. Mais ça reste extrèmement rare.
 
             
 
